@@ -6,6 +6,9 @@
 #gem install sass --pre
 #gem install compass --pre
 
+##install coffeescript
+#sudo npm install -g coffee-script
+
 ##database
 #postgresql==9.1
 #postgresql-server-dev-9.1 (so pip install psycopg2 will work)
