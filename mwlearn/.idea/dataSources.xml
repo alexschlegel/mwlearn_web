@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DataSourceManagerImpl" format="xml" hash="4123922338">
+    <data-source source="LOCAL" name="Django default" uuid="3c1c49e0-8000-4c27-91fc-513ad9417735">
+      <driver-ref>postgresql</driver-ref>
+      <jdbc-driver>org.postgresql.Driver</jdbc-driver>
+      <jdbc-url>jdbc:postgresql://127.0.0.1:5432/mwlearn</jdbc-url>
+      <user-name>alex</user-name>
+      <user-password>df9adfcfdfc9dfc1dfd3df9cdf92dfcfdfc9dfc1dfd3df9f</user-password>
+      <libraries>
+        <library>
+          <url>file://$USER_HOME$/.PyCharm30/config/jdbc-drivers/postgresql-driver-license.txt</url>
+        </library>
+        <library>
+          <url>jar://$USER_HOME$/.PyCharm30/config/jdbc-drivers/postgresql-9.3-1100.jdbc4.jar!/</url>
+        </library>
+      </libraries>
+    </data-source>
+  </component>
+</project>
+
