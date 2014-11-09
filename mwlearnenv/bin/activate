@@ -39,7 +39,12 @@ deactivate () {
 # unset irrelevant variables
 deactivate nondestructive
 
-VIRTUAL_ENV="/home/alex/studies/mwlearn/code/web/mwlearnenv"
+if [ "`whoami`" = "alex" ]; then
+	VIRTUAL_ENV="/home/alex/studies/mwlearn/code/web/mwlearnenv"
+else
+	VIRTUAL_ENV="/var/www/mwlearn/mwlearnenv"
+fi
+echo "setting up virtual environment for `whoami`"
 export VIRTUAL_ENV
 
 _OLD_VIRTUAL_PATH="$PATH"
