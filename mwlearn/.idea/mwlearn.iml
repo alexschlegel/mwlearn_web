@@ -11,7 +11,7 @@
   </component>
   <component name="NewModuleRootManager">
     <content url="file://$MODULE_DIR$" />
-    <orderEntry type="jdk" jdkName="Python 3.4.0 virtualenv at ~/studies/mwlearn/code/web/mwlearnenv" jdkType="Python SDK" />
+    <orderEntry type="jdk" jdkName="Python 3.4.0 virtualenv at /var/www/mwlearn/mwlearnenv" jdkType="Python SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="sass-stdlib" level="application" />
   </component>
