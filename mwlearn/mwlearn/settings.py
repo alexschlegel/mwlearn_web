@@ -111,7 +111,6 @@ STATIC_URL = '/static/'
 
 STATICFILES_FINDERS += (
 	'compressor.finders.CompressorFinder',
-	#i'm just using bower to have the sources to look at 'djangobower.finders.BowerFinder',
 )
 
 # compressor
