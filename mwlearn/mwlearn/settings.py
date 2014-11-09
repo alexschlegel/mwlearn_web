@@ -29,7 +29,7 @@ SECRET_KEY = '*$v$xq7d)e!-&2589*f4y!^t!&ep$#-te+ans7h2n27yivp9(m'
 if ME == ME_DEV:
 	DEBUG = True
 else:
-	DEBUG = False
+	DEBUG = True
 
 TEMPLATE_DEBUG = DEBUG
 
