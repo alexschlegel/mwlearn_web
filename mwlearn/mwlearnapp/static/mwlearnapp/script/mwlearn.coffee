@@ -179,6 +179,7 @@ window.squareGrid = (n) ->
 window.MWLearn = class MWLearn
   base: null
 
+  user_greeting: null
   user: null
   csrf: null
 
@@ -237,6 +238,7 @@ window.MWLearn = class MWLearn
 
     @debug = options.debug
 
+    @user_greeting = options.user_greeting
     @user = options.user
     @csrf = options.csrf
 
@@ -3857,7 +3859,7 @@ window.MWLearn = class MWLearn
     start: ->
       @_started = true
 
-      @base.action.dialog "Hi, #{capitalize(@base.user)}! Welcome to Session #{@currentSession()}!\n \nSee the menu on the left if you need help.\n \nThe timer in the upper left shows how much\ntime is remaining in the session.",
+      @base.action.dialog "Hi, #{capitalize(@base.user_greeting)}! Welcome to Session #{@currentSession()}!\n \nSee the menu on the left if you need help.\n \nThe timer in the upper left shows how much\ntime is remaining in the session.",
         type: 'ok'
         callback: => @run()
 

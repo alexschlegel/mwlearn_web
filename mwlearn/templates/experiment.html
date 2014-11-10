@@ -60,6 +60,7 @@
 
 			window.mwl = new MWLearn
 			  debug: window.DEBUG
+			  user_greeting: '{% if request.user.first_name %}{{ request.user.first_name }}{% else %}{{ request.user.username }}{% endif %}'
 			  user: '{{ request.user.username }}'
 			  csrf: '{{ csrf_token }}'
 
