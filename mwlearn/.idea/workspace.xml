@@ -28,22 +28,7 @@
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="-0.625" vertical-offset="615" max-vertical-offset="1260">
               <caret line="42" column="0" selection-start-line="42" selection-start-column="0" selection-end-line="42" selection-end-column="0" />
-              <folding>
-                <marker date="1415562972898" expanded="true" signature="235:1195" placeholder="..." />
-                <marker date="1415562972898" expanded="true" signature="276:1138" placeholder="..." />
-                <marker date="1415562972898" expanded="true" signature="382:1050" placeholder="..." />
-                <marker date="1415562972898" expanded="true" signature="414:1044" placeholder="..." />
-                <marker date="1415562972898" expanded="true" signature="423:760" placeholder="..." />
-                <marker date="1415562972898" expanded="true" signature="769:1034" placeholder="..." />
-                <marker date="1415562972898" expanded="true" signature="1269:1706" placeholder="..." />
-                <marker date="1415562972898" expanded="true" signature="1297:1573" placeholder="..." />
-                <marker date="1415562972898" expanded="true" signature="1815:1850" placeholder="..." />
-                <marker date="1415562972898" expanded="true" signature="2490:3084" placeholder="..." />
-                <marker date="1415562972898" expanded="true" signature="2518:3037" placeholder="..." />
-                <marker date="1415562972898" expanded="true" signature="2592:2682" placeholder="debug: window.DEBUG..." />
-                <marker date="1415562972898" expanded="true" signature="2741:2839" placeholder="..." />
-                <marker date="1415562972898" expanded="true" signature="2794:2827" placeholder="..." />
-              </folding>
+              <folding />
             </state>
           </provider>
         </entry>
@@ -78,6 +63,16 @@
           </provider>
         </entry>
       </file>
+      <file leaf-file-name="experiment.scss" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/mwlearnapp/static/mwlearnapp/style/experiment.scss">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1770">
+              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file leaf-file-name="data.py" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/mwlearnapp/data.py">
           <provider selected="true" editor-type-id="text-editor">
@@ -98,11 +93,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="settings.py" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="settings.py" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/mwlearn/settings.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.2538071" vertical-offset="315" max-vertical-offset="2250">
-              <caret line="31" column="16" selection-start-line="31" selection-start-column="16" selection-end-line="31" selection-end-column="16" />
+            <state vertical-scroll-proportion="0.0" vertical-offset="1485" max-vertical-offset="2280">
+              <caret line="121" column="20" selection-start-line="121" selection-start-column="20" selection-end-line="121" selection-end-column="20" />
               <folding>
                 <element signature="e#246#261#0" expanded="true" />
               </folding>
@@ -131,7 +126,6 @@
         <option value="$PROJECT_DIR$/mwlearnapp/static/mwlearnapp/script/mwstim.coffee" />
         <option value="$PROJECT_DIR$/mwlearnapp/static/mwlearnapp/external/raphael/raphael.js" />
         <option value="$PROJECT_DIR$/mwlearnapp/static/mwlearnapp/script/unused_assemblage_parts.coffee" />
-        <option value="$PROJECT_DIR$/mwlearnapp/static/mwlearnapp/style/experiment.scss" />
         <option value="$PROJECT_DIR$/templates/login.html" />
         <option value="$PROJECT_DIR$/mwlearnapp/tests.py" />
         <option value="$PROJECT_DIR$/mwlearnapp/views.py" />
@@ -146,6 +140,7 @@
         <option value="$PROJECT_DIR$/mwlearnapp/static/mwlearnapp/style/base/base.scss" />
         <option value="$PROJECT_DIR$/mwlearnapp/static/mwlearnapp/style/login.scss" />
         <option value="$PROJECT_DIR$/mwlearn/settings.py" />
+        <option value="$PROJECT_DIR$/mwlearnapp/static/mwlearnapp/style/experiment.scss" />
       </list>
     </option>
   </component>
@@ -675,22 +670,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="405" max-vertical-offset="525">
           <caret line="27" column="13" selection-start-line="27" selection-start-column="13" selection-end-line="27" selection-end-column="13" />
-          <folding>
-            <marker date="1415562972898" expanded="true" signature="235:1195" placeholder="..." />
-            <marker date="1415562972898" expanded="true" signature="276:1138" placeholder="..." />
-            <marker date="1415562972898" expanded="true" signature="382:1050" placeholder="..." />
-            <marker date="1415562972898" expanded="true" signature="414:1044" placeholder="..." />
-            <marker date="1415562972898" expanded="true" signature="423:760" placeholder="..." />
-            <marker date="1415562972898" expanded="true" signature="769:1034" placeholder="..." />
-            <marker date="1415562972898" expanded="true" signature="1269:1706" placeholder="..." />
-            <marker date="1415562972898" expanded="true" signature="1297:1573" placeholder="..." />
-            <marker date="1415562972898" expanded="true" signature="1815:1850" placeholder="..." />
-            <marker date="1415562972898" expanded="true" signature="2490:3084" placeholder="..." />
-            <marker date="1415562972898" expanded="true" signature="2518:3037" placeholder="..." />
-            <marker date="1415562972898" expanded="true" signature="2592:2682" placeholder="debug: window.DEBUG..." />
-            <marker date="1415562972898" expanded="true" signature="2741:2839" placeholder="..." />
-            <marker date="1415562972898" expanded="true" signature="2794:2827" placeholder="..." />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -736,22 +716,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="405" max-vertical-offset="525">
           <caret line="27" column="13" selection-start-line="27" selection-start-column="13" selection-end-line="27" selection-end-column="13" />
-          <folding>
-            <marker date="1415562972898" expanded="true" signature="235:1195" placeholder="..." />
-            <marker date="1415562972898" expanded="true" signature="276:1138" placeholder="..." />
-            <marker date="1415562972898" expanded="true" signature="382:1050" placeholder="..." />
-            <marker date="1415562972898" expanded="true" signature="414:1044" placeholder="..." />
-            <marker date="1415562972898" expanded="true" signature="423:760" placeholder="..." />
-            <marker date="1415562972898" expanded="true" signature="769:1034" placeholder="..." />
-            <marker date="1415562972898" expanded="true" signature="1269:1706" placeholder="..." />
-            <marker date="1415562972898" expanded="true" signature="1297:1573" placeholder="..." />
-            <marker date="1415562972898" expanded="true" signature="1815:1850" placeholder="..." />
-            <marker date="1415562972898" expanded="true" signature="2490:3084" placeholder="..." />
-            <marker date="1415562972898" expanded="true" signature="2518:3037" placeholder="..." />
-            <marker date="1415562972898" expanded="true" signature="2592:2682" placeholder="debug: window.DEBUG..." />
-            <marker date="1415562972898" expanded="true" signature="2741:2839" placeholder="..." />
-            <marker date="1415562972898" expanded="true" signature="2794:2827" placeholder="..." />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -797,22 +762,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="300" max-vertical-offset="540">
           <caret line="20" column="16" selection-start-line="20" selection-start-column="16" selection-end-line="20" selection-end-column="16" />
-          <folding>
-            <marker date="1415562972898" expanded="true" signature="235:1195" placeholder="..." />
-            <marker date="1415562972898" expanded="true" signature="276:1138" placeholder="..." />
-            <marker date="1415562972898" expanded="true" signature="382:1050" placeholder="..." />
-            <marker date="1415562972898" expanded="true" signature="414:1044" placeholder="..." />
-            <marker date="1415562972898" expanded="true" signature="423:760" placeholder="..." />
-            <marker date="1415562972898" expanded="true" signature="769:1034" placeholder="..." />
-            <marker date="1415562972898" expanded="true" signature="1269:1706" placeholder="..." />
-            <marker date="1415562972898" expanded="true" signature="1297:1573" placeholder="..." />
-            <marker date="1415562972898" expanded="true" signature="1815:1850" placeholder="..." />
-            <marker date="1415562972898" expanded="true" signature="2490:3084" placeholder="..." />
-            <marker date="1415562972898" expanded="true" signature="2518:3037" placeholder="..." />
-            <marker date="1415562972898" expanded="true" signature="2592:2682" placeholder="debug: window.DEBUG..." />
-            <marker date="1415562972898" expanded="true" signature="2741:2839" placeholder="..." />
-            <marker date="1415562972898" expanded="true" signature="2794:2827" placeholder="..." />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -960,14 +910,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/mwlearnapp/static/mwlearnapp/style/experiment.scss">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="943" max-vertical-offset="1800">
-          <caret line="89" column="18" selection-start-line="89" selection-start-column="18" selection-end-line="89" selection-end-column="18" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/mwlearnapp/static/mwlearnapp/script/rotate_paths.coffee">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1185">
@@ -1014,29 +956,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/templates/experiment.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-0.625" vertical-offset="615" max-vertical-offset="1260">
-          <caret line="42" column="0" selection-start-line="42" selection-start-column="0" selection-end-line="42" selection-end-column="0" />
-          <folding>
-            <marker date="1415562972898" expanded="true" signature="235:1195" placeholder="..." />
-            <marker date="1415562972898" expanded="true" signature="276:1138" placeholder="..." />
-            <marker date="1415562972898" expanded="true" signature="382:1050" placeholder="..." />
-            <marker date="1415562972898" expanded="true" signature="414:1044" placeholder="..." />
-            <marker date="1415562972898" expanded="true" signature="423:760" placeholder="..." />
-            <marker date="1415562972898" expanded="true" signature="769:1034" placeholder="..." />
-            <marker date="1415562972898" expanded="true" signature="1269:1706" placeholder="..." />
-            <marker date="1415562972898" expanded="true" signature="1297:1573" placeholder="..." />
-            <marker date="1415562972898" expanded="true" signature="1815:1850" placeholder="..." />
-            <marker date="1415562972898" expanded="true" signature="2490:3084" placeholder="..." />
-            <marker date="1415562972898" expanded="true" signature="2518:3037" placeholder="..." />
-            <marker date="1415562972898" expanded="true" signature="2592:2682" placeholder="debug: window.DEBUG..." />
-            <marker date="1415562972898" expanded="true" signature="2741:2839" placeholder="..." />
-            <marker date="1415562972898" expanded="true" signature="2794:2827" placeholder="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/mwlearnapp/static/mwlearnapp/style/base/base.scss">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-8.75" vertical-offset="0" max-vertical-offset="300">
@@ -1061,6 +980,14 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/templates/experiment.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-0.625" vertical-offset="615" max-vertical-offset="1260">
+          <caret line="42" column="0" selection-start-line="42" selection-start-column="0" selection-end-line="42" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/templates/base/blank.html">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-2.5" vertical-offset="0" max-vertical-offset="930">
@@ -1071,11 +998,19 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/mwlearn/settings.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.2538071" vertical-offset="315" max-vertical-offset="2250">
-          <caret line="31" column="16" selection-start-line="31" selection-start-column="16" selection-end-line="31" selection-end-column="16" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="1485" max-vertical-offset="2280">
+          <caret line="121" column="20" selection-start-line="121" selection-start-column="20" selection-end-line="121" selection-end-column="20" />
           <folding>
             <element signature="e#246#261#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/mwlearnapp/static/mwlearnapp/style/experiment.scss">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1770">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>
