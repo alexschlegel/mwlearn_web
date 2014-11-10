@@ -1,5 +1,13 @@
-#uninstall ruby
+##uninstall ruby
 #sudo apt-get install build-essential openssl libreadline6 libreadline6-dev curl git-core zlib1g zlib1g-dev libssl-dev libyaml-dev libsqlite3-dev sqlite3 libxml2-dev libxslt-dev autoconf libc6-dev ncurses-dev automake libtool bison subversion nodejs
+##on wertheimer I had to do:
+##	sudo apt-get --purge remove npm
+##	sudo apt-get --purge remove node
+##	sudo apt-get --purge remove nodejs-legacy
+##	sudo apt-get --purge remove nodejs
+##	sudo apt-get install nodejs-legacy
+##	sudo apt-get install npm
+##have to sudo su this stuff on the production server
 #\curl -sSL https://get.rvm.io | bash -s stable --ruby
 # echo '[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm"' >> ~/.bashrc
 ##restart terminal
@@ -39,3 +47,10 @@ cssmin==0.2.0 # for django_compressor
 slimit==0.8.1 # for django_compressor
 ##so pip install git+git://github.com/jezdez/django_compressor
 #django_compressor==dev #"dev" to supports python 3
+
+##deployment
+	##static files
+	#python manage.py collectstatic
+	##database migration to deployment server
+	#python manage.py syncdb
+	#python manage.py migrate
