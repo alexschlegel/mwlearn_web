@@ -109,6 +109,31 @@ fTestAssemblage = (mwl) ->
   y = a.addPart "triangle", x, 1, 2
   a.rotate 2
 
+fTestAssemblageSet = (mwl) ->
+  a = mwl.game.assemblage.create
+    steps: 10
+  a.attr 'x', -200
+  a.show true
+
+  b = mwl.show.Assemblage()
+  b.addSet a.getSet()
+  b.rotate a._rotation/90
+  b.attr 'x', 200
+
+  alert window.equals(a.getSet(),b.getSet())
+
+fTestAssemblageDistractor = (mwl) ->
+  a = mwl.game.assemblage.create
+    steps: 3
+  a.show true
+
+  b = mwl.game.assemblage.createDistractors(a)
+
+  b.push a
+  c = mwl.show.Choice b
+  c.show true
+
+
 fTestShowRotate = (mwl) ->
   nRotate = mwl.game.rotate.path.length
 
@@ -326,6 +351,8 @@ window.MWLearnTests = class MWLearnTests
     @add "testconstruct", fTestConstruct
     @add "testconstructprompt", fTestConstructPrompt
     @add "testassemblage", fTestAssemblage
+    @add "testassemblageset", fTestAssemblageSet
+    @add "testassemblagedistractor", fTestAssemblageDistractor
     @add "testshowrotate", fTestShowRotate
     @add "testscaling", fTestScaling
     @add "testremove", fTestRemove
@@ -342,13 +369,22 @@ window.MWLearnTests = class MWLearnTests
 
   add: (name, fTest) -> @_tests[name] = fTest
 
-  run: (name) ->
-    fTest = =>
-      try
-        @_tests[name](@_mwl)
-        alert "#{name} succeeded!"
+  run: (name, options={}) ->
+    options.try = options.try ? true
+
+    fTry = =>
+      @_tests[name](@_mwl)
+      alert "#{name} succeeded!"
+    fFail = (error) =>
+      alert "#{name} failed (#{error})!"
+
+    fTest = if options.try
+      => try
+        fTry()
       catch error
-        alert "#{name} failed (#{error})!"
+        fFail(error)
+    else
+      => fTry()
 
     @_mwl.queue.add name, fTest
 

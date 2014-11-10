@@ -1,6 +1,10 @@
 window.doDebug = ->
   #alert obj2str(mwl.data._local_datastore)
-  alert mwl.time.Now()
+  x = [ [1,2,3], ['hi', 'bye'] ]
+  y = [ [1,3,3], ['hi', 'bye'] ]
+  z = [ [1,2,3], ['hi', 'bye'] ]
+  alert equals(x,y)
+  alert equals(x,z)
 
 window.obj2str = (obj, indent=0) ->
   if obj? and (typeof obj=='object')
@@ -61,15 +65,13 @@ rotate = (p, theta, about=[0,0]) ->
     x*cs - y*sn + about[0]
     x*sn + y*cs + about[1]
   ]
-equals = (x,y) ->
+window.equals = (x,y) ->
   if Array.isArray(x) and Array.isArray(y)
     if x.length==y.length
-      ret = true
       for idx in [0..x.length-1]
-        if x[idx] != y[idx]
-          ret = false
-          break
-      ret
+        if not equals(x[idx], y[idx])
+          return false
+      true
     else
       false
   else
@@ -1667,19 +1669,20 @@ window.MWLearn = class MWLearn
 
       idx: -> @_idx
 
-      createDistractors: (n) ->
+      createDistractors: (n, options={}) ->
         distractors = (null for [1..n])
 
         replace = [0..@_idx.length-1]
         randomize(replace)
 
         for idx in [0..n-1]
-          parts = copyarray(@_idx)
-          parts[replace[idx]] = @root.game.construct.pickOne(@_d, parts[replace[idx]])
-          distractors[idx] = @root.show.ConstructFigure parts,
+          o = merge options,
             width: @attr "width"
             height: @attr "height"
             color: @attr "color"
+          parts = copyarray(@_idx)
+          parts[replace[idx]] = @root.game.construct.pickOne(@_d, parts[replace[idx]])
+          distractors[idx] = @root.show.ConstructFigure parts, o
 
 
     ConstructPrompt: (figure, options={}) -> new MWClassShowConstructPrompt(@root,figure,options)
@@ -2199,7 +2202,8 @@ window.MWLearn = class MWLearn
         else
           null
 
-      findReplacementsGivenParts: (part, parts) ->
+      findReplacementsGivenParts: (param, parts) ->
+        part = param[0]
         conn = @root.game.assemblage.param(part).connects
 
         replacementParts = []
@@ -2214,36 +2218,65 @@ window.MWLearn = class MWLearn
 
         replacementParts
 
-      findReplacements: (part) ->
+      findReplacements: (param) ->
         #first try with existing parts unless we're a small assemblage
         if @numParts() > 2
-          replacementParts = @findReplacementsGivenParts(part, @existingParts)
+          replacementParts = @findReplacementsGivenParts(param, @existingParts)
         else
           replacementParts = []
 
         #expand to all parts
         if replacementParts.length==0
-          replacementParts = @findReplacementsGivenParts(part, @possibleParts)
+          replacementParts = @findReplacementsGivenParts(param, @possibleParts)
 
         replacementParts
 
-      pickReplacement: (part) -> pickFrom(@findReplacements(part))
+      pickReplacement: (param) ->
+        paramReplace = copyarray param
+        paramReplace[0] = pickFrom(@findReplacements(param))
+        paramReplace
 
       createDistractor: (options={}) ->
         options.color = options.color ? @attr "color"
         options.correct = options.correct ? false
+        options.exclude = options.exclude ? []
 
         #construct the distractor set
-        setParam = @getSet()
-        idx = randomInt(0,setParam.length-1)
-        setParam[idx][0] = @pickReplacement(setParam[idx][0])
+        setParamOrig = @getSet()
+        nTries = 0 #I think this will always work, but just to make sure...
+        loop
+          setParam = copyarray setParamOrig
+          idx = randomInt(0,setParam.length-1)
+          setParam[idx] = @pickReplacement(setParam[idx])
+
+          if options.exclude.length>0 and nTries<20
+            setIsGood = true
+            for setExclude in options.exclude
+              if equals(setParam, setExclude)
+                setIsGood = false
+                nTries++
+                break
+            if setIsGood then break
+          else
+            break
 
         #create the distractor
-        distractor = @root.show.Assemblage options
+        distractor = @root.show.Assemblage remove(options,['exclude'])
         distractor.addSet setParam
         distractor.rotate @_rotation/90
 
         distractor
+
+      createDistractors: (n, options={}) ->
+        distractors = []
+        distractorsSet = []
+
+        for [1..n]
+          d = @createDistractor merge(options,{exclude:distractorsSet})
+          distractors.push d
+          distractorsSet.push d.getSet()
+
+        distractors
 
     AssemblageInstruction: (a, step=null, options={}) -> new MWClassShowAssemblageInstruction(@root, a, step, options)
     MWClassShowAssemblageInstruction: class MWClassShowAssemblageInstruction extends MWClassShowInstructions
@@ -2340,6 +2373,8 @@ window.MWLearn = class MWLearn
       createPrompt: (options={}) -> @createVariant @_initialOrientation, options
 
       createDistractor: (options={}) -> @createVariant @_distractorOrientation, options
+
+      createDistractors: (n, options={}) -> (@createDistractor(options) for [1..n])
 
     Progress: (info, options={}) -> new MWClassShowProgress(@root,info,options)
     MWClassShowProgress: class MWClassShowProgress extends MWClassShowCompoundStimulus
@@ -2861,7 +2896,7 @@ window.MWLearn = class MWLearn
               @storeStimulus s, idx
 
               if @contain then s.contain()
-              s.show(true) #***
+              s.show(true)
             else if s instanceof Function
               @parseStimulus s(@, idx), idx
             else if Array.isArray(s)
@@ -3325,7 +3360,7 @@ window.MWLearn = class MWLearn
         "#{description}#{strExtra}"
 
       create: (param) -> throw 'not implemented'
-      createDistractor: (target) -> (target.createDistractor({show:false}) for [1..@nDistractor])
+      createDistractors: (target) -> target.createDistractors @nDistractor, {show:false}
 
       prompt: (target) -> @root.show.Text 'Do something'
       promptStim: -> (s, idx) => @prompt s.pre.target
@@ -3337,7 +3372,7 @@ window.MWLearn = class MWLearn
 
       test: (target) ->
         target.correct = true
-        test = forceArray(@createDistractor(target))
+        test = forceArray(@createDistractors(target))
         distractor.correct = false for distractor in test
         test.push target
         randomize test
@@ -3495,7 +3530,6 @@ window.MWLearn = class MWLearn
           next.push ['mouse']
           idx++
 
-        #***
         shw = @root.exec.Show "#{@name}_tutorial_intro", stim, next,
           description: "#{capitalize(@name)} tutorial introduction"
 
@@ -3581,7 +3615,6 @@ window.MWLearn = class MWLearn
         param.parts = target._idx
 
         target
-      createDistractor: (target) -> target.createDistractors(@nDistractor)
 
       prompt: (target) ->
         @root.show.ConstructPrompt(target,{show:false})

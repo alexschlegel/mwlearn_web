@@ -60,6 +60,7 @@
 
 			window.mwl = new MWLearn
 			  debug: window.DEBUG
+			  run_session: false #***true
 			  user_greeting: '{% if request.user.first_name %}{{ request.user.first_name }}{% else %}{{ request.user.username }}{% endif %}'
 			  user: '{{ request.user.username }}'
 			  csrf: '{{ csrf_token }}'
@@ -74,6 +75,7 @@
 			$("#action_logout").click => mwl.action.logoutConfirm(); false
 			if window.DEBUG then $("#action_debug").click => window.doDebug(); false
 
-			#mwlTest = new MWLearnTests(mwl)
+			mwlTest = new MWLearnTests(mwl)
+			mwlTest.run('testassemblagedistractor',{try:false})
 	</script>
 {% endblock script %}
