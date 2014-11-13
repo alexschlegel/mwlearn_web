@@ -1,0 +1,74 @@
+[Sun Nov 09 22:28:46.513727 2014] [:error] [pid 2854:tid 140635659028224] [client 180.76.6.65:58821] mod_wsgi (pid=2854): Exception occurred processing WSGI script '/var/www/mwlearn/mwlearn/mwlearn/wsgi.py'.
+[Sun Nov 09 22:28:46.513926 2014] [:error] [pid 2854:tid 140635659028224] [client 180.76.6.65:58821] OSError: failed to write data
+[Sun Nov 09 17:41:26.410596 2014] [:error] [pid 10920:tid 139998125131520] [client 71.235.190.223:48931] mod_wsgi (pid=10920): Exception occurred processing WSGI script '/var/www/mwlearn/mwlearn/mwlearn/wsgi.py'.
+[Sun Nov 09 17:41:26.410691 2014] [:error] [pid 10920:tid 139998125131520] [client 71.235.190.223:48931] Traceback (most recent call last):
+[Sun Nov 09 17:41:26.410956 2014] [:error] [pid 10920:tid 139998125131520] [client 71.235.190.223:48931]   File "/var/www/mwlearn/mwlearnenv/lib/python3.4/site-packages/django/core/handlers/wsgi.py", line 187, in __call__
+[Sun Nov 09 17:41:26.410970 2014] [:error] [pid 10920:tid 139998125131520] [client 71.235.190.223:48931]     self.load_middleware()
+[Sun Nov 09 17:41:26.411281 2014] [:error] [pid 10920:tid 139998125131520] [client 71.235.190.223:48931]   File "/var/www/mwlearn/mwlearnenv/lib/python3.4/site-packages/django/core/handlers/base.py", line 44, in load_middleware
+[Sun Nov 09 17:41:26.411297 2014] [:error] [pid 10920:tid 139998125131520] [client 71.235.190.223:48931]     for middleware_path in settings.MIDDLEWARE_CLASSES:
+[Sun Nov 09 17:41:26.411480 2014] [:error] [pid 10920:tid 139998125131520] [client 71.235.190.223:48931]   File "/var/www/mwlearn/mwlearnenv/lib/python3.4/site-packages/django/conf/__init__.py", line 54, in __getattr__
+[Sun Nov 09 17:41:26.411491 2014] [:error] [pid 10920:tid 139998125131520] [client 71.235.190.223:48931]     self._setup(name)
+[Sun Nov 09 17:41:26.411531 2014] [:error] [pid 10920:tid 139998125131520] [client 71.235.190.223:48931]   File "/var/www/mwlearn/mwlearnenv/lib/python3.4/site-packages/django/conf/__init__.py", line 49, in _setup
+[Sun Nov 09 17:41:26.411539 2014] [:error] [pid 10920:tid 139998125131520] [client 71.235.190.223:48931]     self._wrapped = Settings(settings_module)
+[Sun Nov 09 17:41:26.411570 2014] [:error] [pid 10920:tid 139998125131520] [client 71.235.190.223:48931]   File "/var/www/mwlearn/mwlearnenv/lib/python3.4/site-packages/django/conf/__init__.py", line 128, in __init__
+[Sun Nov 09 17:41:26.411577 2014] [:error] [pid 10920:tid 139998125131520] [client 71.235.190.223:48931]     mod = importlib.import_module(self.SETTINGS_MODULE)
+[Sun Nov 09 17:41:26.411733 2014] [:error] [pid 10920:tid 139998125131520] [client 71.235.190.223:48931]   File "/usr/lib/python3.4/importlib/__init__.py", line 109, in import_module
+[Sun Nov 09 17:41:26.411748 2014] [:error] [pid 10920:tid 139998125131520] [client 71.235.190.223:48931]     return _bootstrap._gcd_import(name[level:], package, level)
+[Sun Nov 09 17:41:26.411788 2014] [:error] [pid 10920:tid 139998125131520] [client 71.235.190.223:48931]   File "<frozen importlib._bootstrap>", line 2231, in _gcd_import
+[Sun Nov 09 17:41:26.411826 2014] [:error] [pid 10920:tid 139998125131520] [client 71.235.190.223:48931]   File "<frozen importlib._bootstrap>", line 2214, in _find_and_load
+[Sun Nov 09 17:41:26.411860 2014] [:error] [pid 10920:tid 139998125131520] [client 71.235.190.223:48931]   File "<frozen importlib._bootstrap>", line 2203, in _find_and_load_unlocked
+[Sun Nov 09 17:41:26.411900 2014] [:error] [pid 10920:tid 139998125131520] [client 71.235.190.223:48931]   File "<frozen importlib._bootstrap>", line 1200, in _load_unlocked
+[Sun Nov 09 17:41:26.411933 2014] [:error] [pid 10920:tid 139998125131520] [client 71.235.190.223:48931]   File "<frozen importlib._bootstrap>", line 1129, in _exec
+[Sun Nov 09 17:41:26.411957 2014] [:error] [pid 10920:tid 139998125131520] [client 71.235.190.223:48931]   File "<frozen importlib._bootstrap>", line 1448, in exec_module
+[Sun Nov 09 17:41:26.411979 2014] [:error] [pid 10920:tid 139998125131520] [client 71.235.190.223:48931]   File "<frozen importlib._bootstrap>", line 321, in _call_with_frames_removed
+[Sun Nov 09 17:41:26.412190 2014] [:error] [pid 10920:tid 139998125131520] [client 71.235.190.223:48931]   File "/var/www/mwlearn/mwlearn/mwlearn/settings.py", line 119, in <module>
+[Sun Nov 09 17:41:26.412200 2014] [:error] [pid 10920:tid 139998125131520] [client 71.235.190.223:48931]     BLAH = os.getusername()
+[Sun Nov 09 17:41:26.412231 2014] [:error] [pid 10920:tid 139998125131520] [client 71.235.190.223:48931] AttributeError: 'module' object has no attribute 'getusername'
+[Sun Nov 09 18:18:50.479032 2014] [:error] [pid 8252:tid 140261189408512] [client 71.235.190.223:50402] mod_wsgi (pid=8252): Exception occurred processing WSGI script '/var/www/mwlearn/mwlearn/mwlearn/wsgi.py'.
+[Sun Nov 09 18:18:50.479097 2014] [:error] [pid 8252:tid 140261189408512] [client 71.235.190.223:50402] Traceback (most recent call last):
+[Sun Nov 09 18:18:50.479257 2014] [:error] [pid 8252:tid 140261189408512] [client 71.235.190.223:50402]   File "/var/www/mwlearn/mwlearnenv/lib/python3.4/site-packages/django/core/handlers/wsgi.py", line 187, in __call__
+[Sun Nov 09 18:18:50.479264 2014] [:error] [pid 8252:tid 140261189408512] [client 71.235.190.223:50402]     self.load_middleware()
+[Sun Nov 09 18:18:50.479388 2014] [:error] [pid 8252:tid 140261189408512] [client 71.235.190.223:50402]   File "/var/www/mwlearn/mwlearnenv/lib/python3.4/site-packages/django/core/handlers/base.py", line 44, in load_middleware
+[Sun Nov 09 18:18:50.479394 2014] [:error] [pid 8252:tid 140261189408512] [client 71.235.190.223:50402]     for middleware_path in settings.MIDDLEWARE_CLASSES:
+[Sun Nov 09 18:18:50.479495 2014] [:error] [pid 8252:tid 140261189408512] [client 71.235.190.223:50402]   File "/var/www/mwlearn/mwlearnenv/lib/python3.4/site-packages/django/conf/__init__.py", line 54, in __getattr__
+[Sun Nov 09 18:18:50.479501 2014] [:error] [pid 8252:tid 140261189408512] [client 71.235.190.223:50402]     self._setup(name)
+[Sun Nov 09 18:18:50.479525 2014] [:error] [pid 8252:tid 140261189408512] [client 71.235.190.223:50402]   File "/var/www/mwlearn/mwlearnenv/lib/python3.4/site-packages/django/conf/__init__.py", line 49, in _setup
+[Sun Nov 09 18:18:50.479531 2014] [:error] [pid 8252:tid 140261189408512] [client 71.235.190.223:50402]     self._wrapped = Settings(settings_module)
+[Sun Nov 09 18:18:50.479550 2014] [:error] [pid 8252:tid 140261189408512] [client 71.235.190.223:50402]   File "/var/www/mwlearn/mwlearnenv/lib/python3.4/site-packages/django/conf/__init__.py", line 128, in __init__
+[Sun Nov 09 18:18:50.479554 2014] [:error] [pid 8252:tid 140261189408512] [client 71.235.190.223:50402]     mod = importlib.import_module(self.SETTINGS_MODULE)
+[Sun Nov 09 18:18:50.479654 2014] [:error] [pid 8252:tid 140261189408512] [client 71.235.190.223:50402]   File "/usr/lib/python3.4/importlib/__init__.py", line 109, in import_module
+[Sun Nov 09 18:18:50.479660 2014] [:error] [pid 8252:tid 140261189408512] [client 71.235.190.223:50402]     return _bootstrap._gcd_import(name[level:], package, level)
+[Sun Nov 09 18:18:50.479675 2014] [:error] [pid 8252:tid 140261189408512] [client 71.235.190.223:50402]   File "<frozen importlib._bootstrap>", line 2231, in _gcd_import
+[Sun Nov 09 18:18:50.479688 2014] [:error] [pid 8252:tid 140261189408512] [client 71.235.190.223:50402]   File "<frozen importlib._bootstrap>", line 2214, in _find_and_load
+[Sun Nov 09 18:18:50.479699 2014] [:error] [pid 8252:tid 140261189408512] [client 71.235.190.223:50402]   File "<frozen importlib._bootstrap>", line 2203, in _find_and_load_unlocked
+[Sun Nov 09 18:18:50.479711 2014] [:error] [pid 8252:tid 140261189408512] [client 71.235.190.223:50402]   File "<frozen importlib._bootstrap>", line 1200, in _load_unlocked
+[Sun Nov 09 18:18:50.479723 2014] [:error] [pid 8252:tid 140261189408512] [client 71.235.190.223:50402]   File "<frozen importlib._bootstrap>", line 1129, in _exec
+[Sun Nov 09 18:18:50.479734 2014] [:error] [pid 8252:tid 140261189408512] [client 71.235.190.223:50402]   File "<frozen importlib._bootstrap>", line 1448, in exec_module
+[Sun Nov 09 18:18:50.479747 2014] [:error] [pid 8252:tid 140261189408512] [client 71.235.190.223:50402]   File "<frozen importlib._bootstrap>", line 321, in _call_with_frames_removed
+[Sun Nov 09 18:18:50.479845 2014] [:error] [pid 8252:tid 140261189408512] [client 71.235.190.223:50402]   File "/var/www/mwlearn/mwlearn/mwlearn/settings.py", line 120, in <module>
+[Sun Nov 09 18:18:50.479852 2014] [:error] [pid 8252:tid 140261189408512] [client 71.235.190.223:50402]     p = subprocess.open(['which','sass'])
+[Sun Nov 09 18:18:50.479870 2014] [:error] [pid 8252:tid 140261189408512] [client 71.235.190.223:50402] NameError: name 'subprocess' is not defined
+[Sun Nov 09 18:19:23.493998 2014] [:error] [pid 8494:tid 140470996158208] [client 71.235.190.223:50413] mod_wsgi (pid=8494): Exception occurred processing WSGI script '/var/www/mwlearn/mwlearn/mwlearn/wsgi.py'.
+[Sun Nov 09 18:19:23.494057 2014] [:error] [pid 8494:tid 140470996158208] [client 71.235.190.223:50413] Traceback (most recent call last):
+[Sun Nov 09 18:19:23.494218 2014] [:error] [pid 8494:tid 140470996158208] [client 71.235.190.223:50413]   File "/var/www/mwlearn/mwlearnenv/lib/python3.4/site-packages/django/core/handlers/wsgi.py", line 187, in __call__
+[Sun Nov 09 18:19:23.494225 2014] [:error] [pid 8494:tid 140470996158208] [client 71.235.190.223:50413]     self.load_middleware()
+[Sun Nov 09 18:19:23.494368 2014] [:error] [pid 8494:tid 140470996158208] [client 71.235.190.223:50413]   File "/var/www/mwlearn/mwlearnenv/lib/python3.4/site-packages/django/core/handlers/base.py", line 44, in load_middleware
+[Sun Nov 09 18:19:23.494375 2014] [:error] [pid 8494:tid 140470996158208] [client 71.235.190.223:50413]     for middleware_path in settings.MIDDLEWARE_CLASSES:
+[Sun Nov 09 18:19:23.494547 2014] [:error] [pid 8494:tid 140470996158208] [client 71.235.190.223:50413]   File "/var/www/mwlearn/mwlearnenv/lib/python3.4/site-packages/django/conf/__init__.py", line 54, in __getattr__
+[Sun Nov 09 18:19:23.494557 2014] [:error] [pid 8494:tid 140470996158208] [client 71.235.190.223:50413]     self._setup(name)
+[Sun Nov 09 18:19:23.494595 2014] [:error] [pid 8494:tid 140470996158208] [client 71.235.190.223:50413]   File "/var/www/mwlearn/mwlearnenv/lib/python3.4/site-packages/django/conf/__init__.py", line 49, in _setup
+[Sun Nov 09 18:19:23.494603 2014] [:error] [pid 8494:tid 140470996158208] [client 71.235.190.223:50413]     self._wrapped = Settings(settings_module)
+[Sun Nov 09 18:19:23.494633 2014] [:error] [pid 8494:tid 140470996158208] [client 71.235.190.223:50413]   File "/var/www/mwlearn/mwlearnenv/lib/python3.4/site-packages/django/conf/__init__.py", line 128, in __init__
+[Sun Nov 09 18:19:23.494640 2014] [:error] [pid 8494:tid 140470996158208] [client 71.235.190.223:50413]     mod = importlib.import_module(self.SETTINGS_MODULE)
+[Sun Nov 09 18:19:23.494794 2014] [:error] [pid 8494:tid 140470996158208] [client 71.235.190.223:50413]   File "/usr/lib/python3.4/importlib/__init__.py", line 109, in import_module
+[Sun Nov 09 18:19:23.494805 2014] [:error] [pid 8494:tid 140470996158208] [client 71.235.190.223:50413]     return _bootstrap._gcd_import(name[level:], package, level)
+[Sun Nov 09 18:19:23.494828 2014] [:error] [pid 8494:tid 140470996158208] [client 71.235.190.223:50413]   File "<frozen importlib._bootstrap>", line 2231, in _gcd_import
+[Sun Nov 09 18:19:23.494848 2014] [:error] [pid 8494:tid 140470996158208] [client 71.235.190.223:50413]   File "<frozen importlib._bootstrap>", line 2214, in _find_and_load
+[Sun Nov 09 18:19:23.494867 2014] [:error] [pid 8494:tid 140470996158208] [client 71.235.190.223:50413]   File "<frozen importlib._bootstrap>", line 2203, in _find_and_load_unlocked
+[Sun Nov 09 18:19:23.494885 2014] [:error] [pid 8494:tid 140470996158208] [client 71.235.190.223:50413]   File "<frozen importlib._bootstrap>", line 1200, in _load_unlocked
+[Sun Nov 09 18:19:23.494903 2014] [:error] [pid 8494:tid 140470996158208] [client 71.235.190.223:50413]   File "<frozen importlib._bootstrap>", line 1129, in _exec
+[Sun Nov 09 18:19:23.494921 2014] [:error] [pid 8494:tid 140470996158208] [client 71.235.190.223:50413]   File "<frozen importlib._bootstrap>", line 1448, in exec_module
+[Sun Nov 09 18:19:23.494954 2014] [:error] [pid 8494:tid 140470996158208] [client 71.235.190.223:50413]   File "<frozen importlib._bootstrap>", line 321, in _call_with_frames_removed
+[Sun Nov 09 18:19:23.495091 2014] [:error] [pid 8494:tid 140470996158208] [client 71.235.190.223:50413]   File "/var/www/mwlearn/mwlearn/mwlearn/settings.py", line 120, in <module>
+[Sun Nov 09 18:19:23.495100 2014] [:error] [pid 8494:tid 140470996158208] [client 71.235.190.223:50413]     p = subprocess.Popen(['which','sass'])
+[Sun Nov 09 18:19:23.495127 2014] [:error] [pid 8494:tid 140470996158208] [client 71.235.190.223:50413] NameError: name 'subprocess' is not defined
