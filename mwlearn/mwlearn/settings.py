@@ -114,9 +114,6 @@ STATICFILES_FINDERS += (
 )
 
 # compressor
-
-from subprocess import call
-call(['which','sass'])
 COMPRESS_PRECOMPILERS = (
 	('text/x-sass', 'sass "{infile}" "{outfile}"'),
 	('text/x-scss', 'sass --scss --compass "{infile}" "{outfile}"'),

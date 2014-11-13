@@ -1792,7 +1792,7 @@ window.MWLearn = class MWLearn
           @attr "x", r*Math.cos(theta) + xc
           @attr "y", r*Math.sin(theta) + yc
 
-        @attr "orientation", @attr("orientation")+steps
+        @attr "orientation", mod(@attr("orientation")+steps,4)
       scale: (s,xc=null,yc=null) ->
         @attr "thickness", @attr("thickness")*s
         super s,xc,yc
@@ -2012,6 +2012,13 @@ window.MWLearn = class MWLearn
         super a, xc, yc
         el._param.grid = around(rotate(el._param.grid,a)) for el,i in @part()
 
+        gridX = (el._param.grid[0] for el in @part())
+        gridY = (el._param.grid[1] for el in @part())
+        @_grid.min[0] = Math.min(gridX...)
+        @_grid.min[1] = Math.min(gridY...)
+        @_grid.max[0] = Math.max(gridX...)
+        @_grid.max[1] = Math.max(gridY...)
+
         @addEvent 'rotate', a
 
       numParts: () -> @element.length
@@ -2046,7 +2053,8 @@ window.MWLearn = class MWLearn
             el = @part(info)
             instruct = "Remove the #{el.naturalLocation()}"
           when "rotate"
-            instruct = "Rotate the #{@naturalName()} #{naturalAngle(info)}"
+            #instruct = "Rotate the #{@naturalName()} #{naturalAngle(info)}"
+            instruct = "Rotate #{naturalAngle(info)}"
           else
             throw 'Invalid event type'
         @_instruction.push instruct
@@ -2146,11 +2154,10 @@ window.MWLearn = class MWLearn
           setParam[i] = [partName,parent,sidePart,sideParent]
         setParam
 
-      addRandom: (n=1) ->
+      addRandom: () ->
         appendage = @pickAppendage()
         options = if !@numParts()>0 then {} else {orientation: randomInt(0,3)}
-        ret = if appendage? then @addPart appendage...,options else null
-        if n>1 then [ret, @addRandom(n-1)]
+        if appendage? then @addPart appendage...,options else null
 
       naturalName: -> if @numParts()==1 then @part(0).naturalName() else "image"
 
@@ -2195,7 +2202,7 @@ window.MWLearn = class MWLearn
 
         if conn?
           #make it's a square if we only have one possible connection
-          part = if conn.length==1 and conn[0]? then 'square' else @pickPart()
+          part = if conns.length==1 and conn[0]? then 'square' else @pickPart()
           side = @pickSide(part)
 
           [part, conn[0], side, conn[1]]
