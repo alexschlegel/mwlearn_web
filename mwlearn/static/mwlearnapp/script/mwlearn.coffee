@@ -3661,7 +3661,7 @@ window.MWLearn = class MWLearn
       skillInit: 3
       skillStep: 1
       skillMin: 1
-      skillMax: 100
+      skillMax: 10
       skillName: 'steps'
 
       _map: null
