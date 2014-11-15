@@ -36,6 +36,8 @@ div.login_middle {
 
 	width: 400px;
 	height: 200px;
+
+	border: 1px solid red;
 }
 
 div.login_inner {
@@ -44,6 +46,7 @@ div.login_inner {
 	width: 100%;
 
 	.title {
+		font-family: Arial;
 		font-size: 18pt;
 		font-weight: bold;
 		color: rgb(192,0,0);
