@@ -122,9 +122,45 @@ fTestAssemblageSet = (mwl) ->
 
   alert window.equals(a.getSet(),b.getSet())
 
+fTestAssemblageDistractorReplace = (mwl) ->
+  a = mwl.game.assemblage.create
+    steps: randomInt(1,10)
+  a.show true
+
+  b = a.createDistractorReplace()
+
+  c = mwl.show.Choice [a,b]
+
+fTestAssemblageDistractorFlip = (mwl) ->
+  a = mwl.game.assemblage.create
+    steps: randomInt(1,10)
+  a.show true
+
+  b = a.createDistractorFlip()
+
+  c = mwl.show.Choice [a,b]
+
+fTestAssemblageDistractorRotate = (mwl) ->
+  a = mwl.game.assemblage.create
+    steps: randomInt(1,10)
+  a.show true
+
+  b = a.createDistractorRotate()
+
+  c = mwl.show.Choice [a,b]
+
+fTestAssemblageDistractorSwitch = (mwl) ->
+  a = mwl.game.assemblage.create
+    steps: randomInt(1,10)
+  a.show true
+
+  b = a.createDistractorSwitch()
+
+  c = mwl.show.Choice [a,b]
+
 fTestAssemblageDistractor = (mwl) ->
   a = mwl.game.assemblage.create
-    steps: 3
+    steps: 10
   a.show true
 
   b = mwl.game.assemblage.createDistractors(a)
@@ -133,6 +169,24 @@ fTestAssemblageDistractor = (mwl) ->
   c = mwl.show.Choice b
   c.show true
 
+fTestAssemblagePartLocations = (mwl) ->
+  a = mwl.game.assemblage.create
+    steps: 10
+  a.show true
+
+  loc = a.getPartLocations()
+
+  b = mwl.show.Assemblage()
+  b.setSteps a.getSteps()
+
+  locB = b.getPartLocations()
+
+  alert equals(loc,locB)
+
+  loc[idx] = loc[idx].join(' ') for idx in [0..loc.length-1]
+  loc = loc.join("\n")
+
+  alert loc
 
 fTestShowRotate = (mwl) ->
   nRotate = mwl.game.rotate.path.length
@@ -352,7 +406,12 @@ window.MWLearnTests = class MWLearnTests
     @add "testconstructprompt", fTestConstructPrompt
     @add "testassemblage", fTestAssemblage
     @add "testassemblageset", fTestAssemblageSet
+    @add "testassemblagedistractorreplace", fTestAssemblageDistractorReplace
+    @add "testassemblagedistractorflip", fTestAssemblageDistractorFlip
+    @add "testassemblagedistractorrotate", fTestAssemblageDistractorRotate
+    @add "testassemblagedistractorswitch", fTestAssemblageDistractorSwitch
     @add "testassemblagedistractor", fTestAssemblageDistractor
+    @add "testassemblagepartlocations", fTestAssemblagePartLocations
     @add "testshowrotate", fTestShowRotate
     @add "testscaling", fTestScaling
     @add "testremove", fTestRemove

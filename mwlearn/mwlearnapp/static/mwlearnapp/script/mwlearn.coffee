@@ -31,6 +31,7 @@ zpad = (x,n,chr='0') -> x=chr + x while (''+x).length < n; x
 extend = (obj, prop) -> obj[key]=val for key, val of prop; obj
 copyobj = (obj) -> extend {}, obj
 copyarray = (arr) -> arr.slice(0)
+deepcopyarray = (arr) -> ( (if Array.isArray(x) then deepcopyarray(x) else x) for x in arr)
 merge = (obj1, obj2) -> extend copyobj(obj1), obj2
 remove = (obj, keys) -> objc = copyobj(obj); delete(objc[key]) for key in keys; objc
 swap = (x,i1,i2) -> tmp=x[i1]; x[i1]=x[i2]; x[i2]=tmp
@@ -1973,15 +1974,13 @@ window.MWLearn = class MWLearn
         options.background = options.background ? true
         options.correct = options.correct ? true
 
-        @existingParts = []
         @possibleParts = parts[0..options.imax]
 
         @_options = options
-        @_history = []
-        @_instruction = []
-        @_grid = {min: [0,0], max: [0,0]}
 
         @correct = options.correct
+
+        @reset()
 
         super root, [], options
 
@@ -2005,6 +2004,13 @@ window.MWLearn = class MWLearn
             if value? then part.attr("color",value) for part in @part() else super(name)
           else
             super name, value
+
+      reset: ->
+        @element = []
+        @existingParts = []
+        @_history = []
+        @_instruction = []
+        @_grid = {min: [0,0], max: [0,0]}
 
       rotate: (steps, xc=null, yc=null) ->
         a = 90*steps
@@ -2243,47 +2249,214 @@ window.MWLearn = class MWLearn
         paramReplace[0] = pickFrom(@findReplacements(param))
         paramReplace
 
-      createDistractor: (options={}) ->
+      createDistractorReplace: (options={}) ->
+        options.exclude = options.exclude ? []
+
+        #create the distractor
+        distractor = @root.show.Assemblage remove(options,['exclude'])
+
+        stepsOrig = @getSteps()
+
+        idxStepAdd = (idx for step,idx in stepsOrig when step[0]=='add')
+
+        nTries = 0
+        while nTries<20
+          steps = deepcopyarray stepsOrig
+
+          idx = pickFrom(idxStepAdd)
+          steps[idx][1..] = @pickReplacement(steps[idx][1..])
+
+          distractor.setSteps(steps)
+
+          if not distractor.locationMatch(options.exclude)
+            return distractor
+
+          nTries++
+        distractor
+
+      createDistractorSwitch: (options={}) ->
+        options.exclude = options.exclude ? []
+
+        #create the distractor
+        distractor = @root.show.Assemblage remove(options,['exclude'])
+
+        #construct the distractor set
+        stepsOrig = @getSteps()
+
+        #find parts that can be switched
+
+        #get the connection profile of each existing part
+        conn = (@root.game.assemblage.param(name).connects for name in @existingParts)
+
+        #find matching connection profiles
+        connU = unique(conn)
+        idxU = (find(conn,cu)[0] for cu in connU)
+        idxConn = (find(connU,c)[0] for c in conn)
+        matchingParts = ( (@existingParts[idx] for ic,idx in idxConn when ic==iu) for iu in idxU )
+        matchingParts = (mp for mp in matchingParts when mp.length>1)
+
+        if matchingParts.length==0
+          return @createDistractorReplace(options)
+
+        #get all potential transformations
+        txAll = []
+        for mp in matchingParts
+          for p1 in mp
+            for p2 in mp
+              if p1!=p2 then txAll.push [p1, p2]
+        nTX = txAll.length
+
+        #randomize the transformations
+        randomize txAll
+
+        nTries = Math.min(20,nTX)
+        for idxTX in [0..nTries-1]
+          steps = deepcopyarray stepsOrig
+
+          #choose a transformation
+          tx = txAll[idxTX]
+          txFrom = tx[0]
+          txTo = tx[1]
+
+          #choose random from and to parts
+          step1 = (step[1] for step in steps)
+          idxFromAll = find(step1,txFrom)
+          idxToAll = find(step1,txTo)
+
+          idxFrom = pickFrom(idxFromAll)
+          idxTo = pickFrom(idxToAll)
+
+          steps[idxFrom][1] = txTo
+          steps[idxTo][1] = txFrom
+
+          distractor.setSteps(steps)
+
+          if not distractor.locationMatch(options.exclude)
+            #alert "#{stepsOrig}\n#{steps}"
+            #alert (row.join(' ') for row in distractor.getPartLocations()).join('\n')
+            return distractor
+
+        #fallback to a replace distractor
+        distractor.remove()
+        @createDistractorReplace(options)
+
+      createDistractorFlip: (options={}) ->
+        #this is more difficult than it's worth, just to rotate
+        @createDistractorRotate options
+
+      createDistractorRotate: (options={}) ->
+        options.exclude = options.exclude ? []
+
+        steps = @getSteps()
+        loc = @getPartLocations()
+
+        #create the distractor
+        distractor = @root.show.Assemblage remove(options,['exclude'])
+        distractor.setSteps(steps)
+
+        distractor.rotate 2
+
+        if (not distractor.locationMatch(options.exclude)) and (not distractor.locationMatch([loc]))
+          return distractor
+
+        #fallback to a switch distractor
+        distractor.remove()
+        @createDistractorSwitch(options)
+
+      createDistractor: (dType='switch',options={}) ->
         options.color = options.color ? @attr "color"
         options.correct = options.correct ? false
         options.exclude = options.exclude ? []
 
-        #construct the distractor set
-        setParamOrig = @getSet()
-        nTries = 0 #I think this will always work, but just to make sure...
-        loop
-          setParam = copyarray setParamOrig
-          idx = randomInt(0,setParam.length-1)
-          setParam[idx] = @pickReplacement(setParam[idx])
-
-          if options.exclude.length>0 and nTries<20
-            setIsGood = true
-            for setExclude in options.exclude
-              if equals(setParam, setExclude)
-                setIsGood = false
-                nTries++
-                break
-            if setIsGood then break
+        distractor = switch dType
+          when 'switch'
+            @createDistractorSwitch(options)
+          when 'flip'
+            @createDistractorFlip(options)
+          when 'rotate'
+            @createDistractorRotate(options)
+          when 'replace'
+            @createDistractorReplace(options)
           else
-            break
-
-        #create the distractor
-        distractor = @root.show.Assemblage remove(options,['exclude'])
-        distractor.addSet setParam
-        distractor.rotate @_rotation/90
-
-        distractor
+            throw "#{dType} is an invalid distractor type."
 
       createDistractors: (n, options={}) ->
-        distractors = []
-        distractorsSet = []
+        dType = ['switch','flip','rotate']
+        nType = dType.length
 
-        for [1..n]
-          d = @createDistractor merge(options,{exclude:distractorsSet})
-          distractors.push d
-          distractorsSet.push d.getSet()
+        distractors = ([] for [1..n])
+        options.exclude = []
+
+        idxType = -1
+        for idxD in [0..n-1]
+          idxType = mod(idxType+1,nType)
+
+          distractors[idxD] = @createDistractor(dType[idxType],options)
+          options.exclude.push distractors[idxD].getPartLocations()
+
 
         distractors
+
+      getSteps: () ->
+        nStep = @numSteps();
+
+        steps = ([] for [1..nStep])
+        for idx in [0..nStep-1]
+          switch @_history[idx][0]
+            when 'add'
+              idxPart = @_history[idx][1]
+              part = @part(idxPart)
+              partName = part.part
+
+              if part._param.parent?
+                neighbor = @part(part._param.parent)
+                idxNeighbor = neighbor._param.idx
+                sidePart = find(part._param.attachment,idxNeighbor)[0]
+                sideNeighbor = find(neighbor._param.attachment,idxPart)[0]
+              else
+                idxNeighbor = null
+                sidePart = 0
+                sideNeighbor = 0
+
+              steps[idx] = ['add', partName, idxNeighbor, sidePart, sideNeighbor]
+            when 'rotate'
+              ang = @_history[idx][1]
+              steps[idx] = ['rotate', Math.round(ang/90)]
+            else
+              throw "#{@_history[idx][0]} steps are not supported"
+
+      setSteps: (steps) ->
+        @reset()
+
+        for step in steps
+          switch step[0]
+            when 'add'
+              @addPart(step[1..]...)
+            when 'rotate'
+              @rotate(step[1..]...)
+            else
+              throw "#{step[0]} is an invalid step type."
+
+      getPartLocations: ->
+        parts = @part()
+
+        nGridX = @_grid.max[0] - @_grid.min[0] + 1
+        nGridY = @_grid.max[1] - @_grid.min[1] + 1
+
+        loc = ( ('empty' for [1..nGridX]) for [1..nGridY] )
+        for part in parts
+          xPart	= part._param.grid[0] - @_grid.min[0]
+          yPart	= part._param.grid[1] - @_grid.min[1]
+
+          loc[yPart][xPart] = part.part
+        loc
+
+      locationMatch: (locCheck) ->
+        loc	= @getPartLocations()
+
+        for locC in locCheck
+          if equals(locC,loc) then return true
+        return false
 
     AssemblageInstruction: (a, step=null, options={}) -> new MWClassShowAssemblageInstruction(@root, a, step, options)
     MWClassShowAssemblageInstruction: class MWClassShowAssemblageInstruction extends MWClassShowInstructions
