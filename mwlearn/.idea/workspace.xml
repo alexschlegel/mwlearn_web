@@ -45,11 +45,21 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="log.html" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="log.html" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/templates/log.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.24368231" vertical-offset="990" max-vertical-offset="1725">
+            <state vertical-scroll-proportion="-5.625" vertical-offset="990" max-vertical-offset="1725">
               <caret line="75" column="55" selection-start-line="75" selection-start-column="55" selection-end-line="75" selection-end-column="55" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="login.html" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/templates/login.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.20397112" vertical-offset="37" max-vertical-offset="675">
+              <caret line="10" column="34" selection-start-line="10" selection-start-column="34" selection-end-line="10" selection-end-column="34" />
               <folding />
             </state>
           </provider>
@@ -98,7 +108,6 @@
         <option value="$PROJECT_DIR$/mwlearnapp/static/mwlearnapp/script/mwstim.coffee" />
         <option value="$PROJECT_DIR$/mwlearnapp/static/mwlearnapp/external/raphael/raphael.js" />
         <option value="$PROJECT_DIR$/mwlearnapp/static/mwlearnapp/script/unused_assemblage_parts.coffee" />
-        <option value="$PROJECT_DIR$/templates/login.html" />
         <option value="$PROJECT_DIR$/mwlearnapp/tests.py" />
         <option value="$PROJECT_DIR$/mwlearnapp/static/mwlearnapp/script/temp.coffee" />
         <option value="$PROJECT_DIR$/mwlearnapp/static/mwlearnapp/script/rotate_paths.coffee" />
@@ -118,6 +127,7 @@
         <option value="$PROJECT_DIR$/mwlearnapp/views.py" />
         <option value="$PROJECT_DIR$/mwlearnapp/static/mwlearnapp/style/log.scss" />
         <option value="$PROJECT_DIR$/templates/log.html" />
+        <option value="$PROJECT_DIR$/templates/login.html" />
       </list>
     </option>
   </component>
@@ -844,13 +854,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/templates/login.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="1.0559567" vertical-offset="0" max-vertical-offset="675">
-          <caret line="39" column="0" selection-start-line="39" selection-start-column="0" selection-end-line="39" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/templates/base/blank.html">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="60" max-vertical-offset="930">
@@ -989,8 +992,16 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/templates/log.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.24368231" vertical-offset="990" max-vertical-offset="1725">
+        <state vertical-scroll-proportion="-5.625" vertical-offset="990" max-vertical-offset="1725">
           <caret line="75" column="55" selection-start-line="75" selection-start-column="55" selection-end-line="75" selection-end-column="55" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/login.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.20397112" vertical-offset="37" max-vertical-offset="675">
+          <caret line="10" column="34" selection-start-line="10" selection-start-column="34" selection-end-line="10" selection-end-column="34" />
           <folding />
         </state>
       </provider>
