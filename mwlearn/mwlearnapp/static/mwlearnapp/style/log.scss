@@ -1,0 +1,22 @@
+table {
+	margin: 1em;
+	border: 1px solid black;
+
+	th {
+		padding-left: 1em;
+		padding-right: 1em;
+	}
+
+	td {
+		text-align: center;
+
+		border: 1px solid black;
+
+		input {
+			width: 90%;
+		}
+		input[type="button"] {
+			font-size: 10pt;
+		}
+	}
+}

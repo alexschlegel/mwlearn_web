@@ -1,4 +1,4 @@
-#!/home/alex/studies/mwlearn/code/web/mwlearnenv/bin/python3
+#!/var/www/mwlearn/mwlearnenv/bin/python3
 
 # -*- coding: utf-8 -*-
 import re

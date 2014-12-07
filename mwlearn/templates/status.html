@@ -1,0 +1,30 @@
+{% extends "base/base.html" %}
+
+{% load static %}
+
+{% block style %}
+	<link type="text/x-scss" rel="stylesheet" href="{% static "mwlearnapp/style/status.scss" %}" />
+{% endblock style %}
+
+{% block content %}
+	{% for group, group_session in user_sessions.items %}
+		<h1>{{ group }}:</h1>
+		<table>
+			<tr>
+				<th>Subject</th>
+				<th>Sessions</th>
+				<th>Start</th>
+				<th>Finish</th>
+			</tr>
+		{% for data in group_session %}
+			<tr>
+				<td class="user"><a href="mailto:{{ data.user.email }}">{{ data.user.username }}</a> ({{ data.user.get_full_name }}):</td>
+				<td class="value">{{ data.sessions_finished }}</td>
+				<td class="value">{{ data.start_date|date:"Y-m-d" }}</td>
+				<td class="value">{{ data.finish_date|date:"Y-m-d" }}</td>
+			</tr>
+
+		{% endfor %}
+		</table>
+	{% endfor %}
+{% endblock content %}

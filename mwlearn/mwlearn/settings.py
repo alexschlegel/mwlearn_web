@@ -100,7 +100,7 @@ DATABASES = {
 AUTH_USER_MODEL = 'auth.User'
 
 LOGIN_URL = 'account-login'
-LOGIN_REDIRECT_URL = 'experiment'
+LOGIN_REDIRECT_URL = 'login_success'
 LOGOUT_URL = 'account-logout'
 
 # Static files (CSS, JavaScript, Images)

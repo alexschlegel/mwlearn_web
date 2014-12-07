@@ -37,7 +37,7 @@
 #python==3.3
 #pip (for python 3)
 
-Django==1.7.1
+Django==1.6.5
 psycopg2==2.5.1 # PostGreSQL python hook
 South==1.0.1 # django database migration
 beautifulsoup4==4.3.2 # for django_compressor
@@ -45,6 +45,7 @@ versiontools==1.9.1 # for django_compressor
 html5lib==0.999 # for django_compressor
 cssmin==0.2.0 # for django_compressor
 slimit==0.8.1 # for django_compressor
+dateutil==2.3
 ##so pip install git+git://github.com/jezdez/django_compressor
 #django_compressor==dev #"dev" to supports python 3
 
