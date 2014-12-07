@@ -46,7 +46,9 @@ def log_delete_view(request):
 
 
 def login_success(request):
-	if user_is_exp(request.user):
+	if request.user.is_superuser:
+		return redirect("status")
+	elif user_is_exp(request.user):
 		return redirect("experiment")
 	else:
 		return redirect("log")
