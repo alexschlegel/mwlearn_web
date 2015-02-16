@@ -2684,12 +2684,17 @@ window.MRT = class MRT
       @setSequence param
       @_base_param = param ? @root.param.getBase()
 
-      @setSubject()
-      @instructSession {
-        sequence_post: (shw) =>
-          @_started = true
-          @run()
-      }
+      #get the total experiment time
+      @root.dbg.showDuration()
+
+      if @setSubject()
+        @instructSession {
+          sequence_post: (shw) =>
+            @_started = true
+            @run()
+        }
+      else
+        @root.dbg.clear()
 
     step: ->
         @root.dbg.set 'trial', @current_trial+1
@@ -2711,7 +2716,14 @@ window.MRT = class MRT
       else
         null
 
-    setSubject: -> @root.subject = prompt('subject id:',@root.default_subject)
+    setSubject: ->
+      subject = prompt('subject id:',@root.default_subject)
+      if subject?
+        @root.subject = subject
+        true
+      else
+        false
+
 
     setSequence: (param=null) ->
       param = if param? then copy(param,true) else {}
@@ -2721,7 +2733,7 @@ window.MRT = class MRT
       @root.setSeed()
 
       #fill the sequence parameters
-      param.sequence = @root.param.fill param.sequence, 'sequence'
+      param.sequence = @root.param.fill param.sequence, 'sequence', false
 
       #get the possible rotation directions and angles
       rotate_dir = forceArray(@root.param.fillBase(param.stimulus.rotate_dir,'stimulus','rotate_dir'))
@@ -3147,6 +3159,15 @@ window.MRT = class MRT
       @root.session.setSequence(param)
       seq = @root.session.getSequence()
       @set {sequence:seq}, null, true
+
+    showDuration: ->
+      if @root.debug
+        param = @getParam(false,false)
+        @root.session.setSequence(param)
+        trial = @root.param.fill param.trial, 'trial', false
+        tTotal = @root.session.getSequence().length*(trial.duration+trial.isi) - trial.isi
+        @clear 'sequence'
+        @set 'exp_duration', "#{tTotal/(1000*60)} min."
 
     get: (key=null) -> if key? then @debug_values[key] else @debug_values
 
