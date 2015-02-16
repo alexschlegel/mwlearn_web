@@ -1,0 +1,187 @@
+html, body {
+	height: 100%;
+}
+
+#action_help {
+	font-weight: bold;
+}
+
+div.base, div#experiment, #side-bar {
+	height: 100%
+}
+
+#experiment {
+
+}
+#side-bar {
+
+}
+
+div.status {
+	height: 20%
+}
+div.menu {
+	height: 40%;
+
+	ul {
+		margin-bottom: 1em;
+
+		li {
+
+		}
+	}
+
+}
+div.history {
+	height: 40%;
+}
+
+#popup {
+	margin: auto;
+	position: absolute;
+	top: 0;
+	left: 0;
+	bottom: 0;
+	right: 0;
+	width: 80%;
+	height: 80%;
+}
+#popup_dim {
+	margin: auto;
+	position: absolute;
+	top: 0;
+	left: 0;
+	bottom: 0;
+	right: 0;
+	width: 100%;
+	height: 100%;
+	background: rgba(0,0,0,0.4);
+	display: none;
+}
+#failsafe {
+	margin: auto;
+	position: absolute;
+	top: 0;
+	left: 0;
+	bottom: 0;
+	right: 0;
+	width: 90%;
+	height: 90%;
+
+	border: 8px solid red;
+	background: white;
+
+	text-align: center;
+
+	display: none;
+
+	.instruction {
+		font-size: 12pt;
+
+		em {
+			font-weight: bold;
+		}
+	}
+	textarea {
+		margin: 1em;
+
+		height: 75%;
+		width: 95%;
+	}
+	.button {
+
+	}
+}
+
+#experiment {
+	height: 100%;
+}
+
+#debug-base {
+	overflow: hidden;
+}
+
+#debug-side-bar {
+	height: 100%;
+
+	text-align: center;
+
+	overflow: auto;
+
+	h1 {
+		text-align: left;
+		border-bottom: 1px solid black;
+		margin: 0;
+		margin-top: 0.5em;
+		margin-bottom: 0.25em;
+
+		font-size: 10pt;
+	}
+
+	h2 {
+		text-align: left;
+		margin-left: 1em;
+		margin-top: 0.5em;
+		margin-bottom: 0.5em;
+
+		font-size: 8pt;
+		font-weight: normal;
+		font-style: italic;
+	}
+
+	div {
+		text-align: left;
+	}
+
+	label, input, select, .label-like {
+		font-size: 8pt;
+	}
+	label.checkbox {
+		vertical-align: middle;
+	}
+
+	.label-like {
+		line-height: 16pt;
+		text-align: right;
+	}
+
+	label {
+		display: inline-block;
+		width: 50%;
+		text-align: right;
+	}
+
+	input[type="checkbox"] {
+		vertical-align: middle;
+	}
+	input[type="text"] {
+		width: 40%;
+	}
+	input[type="button"] {
+		margin-top: 0.5em;
+	}
+}
+
+#debug-experiment {
+	position: relative;
+	height: 100%;
+}
+
+#debug-info {
+	position: absolute;
+	z-index: 100;
+
+	overflow: hidden;
+	overflow-y: auto;
+
+	height: 100%;
+
+	margin-left: 0.5em;
+	margin-top: 0em;
+	padding-right: 2em;
+	//padding-bottom: 1em;
+
+	font-size: 8pt;
+	font-family: monospace;
+	white-space: pre;
+}

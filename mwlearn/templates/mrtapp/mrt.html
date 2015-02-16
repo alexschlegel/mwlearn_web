@@ -1,0 +1,291 @@
+{% extends "mrtapp/base/blank.html" %}
+
+{% load static %}
+
+{% block style %}
+	<link type="text/x-scss" rel="stylesheet" href="{% static "mrtapp/style/experiment.scss" %}" />
+{% endblock style %}
+
+{% block body %}
+	<div class="pure-g base" id="debug-base">
+		{% if 'debug' in request.GET %}
+			<div class="pure-u-1-4" id="debug-side-bar">
+				<h2>leave blank for default</h2>
+
+				<h1>Misc</h1>
+					<div>
+						<label for="random_seed">random seed:</label>
+						<input type="text" id="random_seed" value="">
+					</div>
+
+					<div>
+						<label for="preset">preset:</label>
+						<select id="preset">
+							<option value=""></option>
+							<option value="default">default</option>
+							<option value="interleave_norotation">interleave no-rotation</option>
+						</select>
+					</div>
+
+				<h1>Session</h1>
+					<div>
+						<label for="sequence_trials_per_condition">trials per dir/ang:</label>
+						<input type="text" id="sequence_trials_per_condition" value="">
+					</div>
+
+					<div>
+						<label for="sequence_match_ratio">match ratio:</label>
+						<input type="text" id="sequence_match_ratio" value="">
+					</div>
+
+					<div>
+						<label for="sequence_interleave_norotation">interleave no-rotation:</label>
+						<input type="checkbox" id="sequence_interleave_norotation">
+					</div>
+
+					<input type="button" value="run" onclick="window.mrt.dbg.run()">
+					<input type="button" value="show sequence" onclick="window.mrt.dbg.showSequence()">
+
+				<h1>Trial</h1>
+					<div>
+						<label for="trial_duration">duration (ms):</label>
+						<input type="text" id="trial_duration" value="">
+					</div>
+
+					<div>
+						<label for="trial_target_delay">target delay (ms):</label>
+						<input type="text" id="trial_target_delay" value="">
+					</div>
+
+					<div>
+						<label for="trial_isi">ISI (ms):</label>
+						<input type="text" id="trial_isi" value="">
+					</div>
+
+					<input type="button" value="run" onclick="window.mrt.dbg.doTrial()">
+
+				<h1>Stimulus</h1>
+
+					<div>
+						<label for="stimulus_match">match:</label>
+						<input type="checkbox" id="stimulus_match">
+					</div>
+
+					<div>
+						<label for="stimulus_idx">index:</label>
+						<select id="stimulus_idx">
+							<option value=""></option>
+							<option value="0">0</option>
+							<option value="1">1</option>
+							<option value="2">2</option>
+							<option value="3">3</option>
+							<option value="4">4</option>
+							<option value="5">5</option>
+							<option value="6">6</option>
+							<option value="7">7</option>
+							{% comment %}<option value="8">8</option>
+							<option value="9">9</option>{% endcomment %}
+						</select>
+					</div>
+
+					<div>
+						<label for="stimulus_rotate_dir">rotate dir:</label>
+						<select id="stimulus_rotate_dir">
+							<option value=""></option>
+							<option value="F">F</option>
+							<option value="B">B</option>
+							<option value="L">L</option>
+							<option value="R">R</option>
+						</select>
+					</div>
+
+					<div>
+						<label for="stimulus_rotate_angle">angle (&deg;):</label>
+						<input type="text" id="stimulus_rotate_angle" value="">
+					</div>
+
+					<div>
+						<label for="stimulus_position">position:</label>
+						<select id="stimulus_position">
+							<option value=""></option>
+							<option value="0">0</option>
+							<option value="1">1</option>
+							<option value="2">2</option>
+							<option value="3">3</option>
+							<option value="4">4</option>
+							<option value="5">5</option>
+							<option value="6">6</option>
+							<option value="7">7</option>
+						</select>
+					</div>
+
+					<div class="pure-g">
+						<div class="pure-u-2-5 label-like">flip</div>
+						<div class="pure-u-3-5"><div class="pure-g">
+							<div class="pure-u-1-3">
+								<label for="stimulus_flip_x" class="checkbox">x:</label>
+								<input type="checkbox" id="stimulus_flip_x">
+							</div>
+							<div class="pure-u-1-3">
+								<label for="stimulus_flip_y" class="checkbox">y:</label>
+								<input type="checkbox" id="stimulus_flip_y">
+							</div>
+							<div class="pure-u-1-3">
+								<label for="stimulus_flip_z" class="checkbox">z:</label>
+								<input type="checkbox" id="stimulus_flip_z">
+							</div>
+						</div></div>
+					</div>
+
+					<div>
+						<label for="stimulus_show_angle">show angle:</label>
+						<input type="checkbox" id="stimulus_show_angle">
+					</div>
+
+					<div>
+						<label for="stimulus_cube_size">cube size (px):</label>
+						<input type="text" id="stimulus_cube_size" value="">
+					</div>
+
+					<div>
+						<label for="stimulus_offset">offset (px):</label>
+						<input type="text" id="stimulus_offset" value="">
+					</div>
+
+					<div>
+						<label for="stimulus_edge">edge (px):</label>
+						<input type="text" id="stimulus_edge" value="">
+					</div>
+
+					<div>
+						<label for="stimulus_font_size">font size (px):</label>
+						<input type="text" id="stimulus_font_size" value="">
+					</div>
+
+					<input type="button" value="show" onclick="window.mrt.dbg.showStimulus()">
+
+					<input type="button" value="test" onclick="window.mrt.dbg.test()">
+			</div>
+			<div class="pure-u-3-4" id="debug-experiment">
+				<div id="debug-info"></div>
+				<div id="experiment"></div>
+			</div>
+		{% else %}
+			<div class="pure-u-1" id="experiment"></div>
+		{% endif %}
+	</div>
+
+	<div id="failsafe">
+		<div class="instruction">
+			Copy and email the text below to <a id="failsafe_mailto" href="mailto:schlegel@gmail.com?subject=data for {{ request.user }}" target="_blank">schlegel@gmail.com</a>. Press Ctrl+C or Cmd+C to copy.
+			<br><em>You will lose all data for this session otherwise.</em>
+		</div>
+		<textarea id="failsafe_data" readonly></textarea>
+		<br><input type="button" onclick="mrt.data.failSafeHide()" value="Ok">
+	</div>
+{% endblock body %}
+
+{% block script %}
+	{% comment %}<script type="text/javascript" src="{% static "mwlearnapp/external/raphael/raphael-min.js" %}"></script>{% endcomment %}
+	<script type="text/javascript" src="{% static "mrtapp/external/raphael/raphael.js" %}"></script>
+	<script type="text/javascript" src="{% static "mrtapp/external/seedrandom.js" %}"></script>
+	<script type="text/coffeescript" charset="utf-8" src="{% static "mrtapp/script/mrt.coffee" %}"></script>
+
+	<script type="text/coffeescript">
+		window.DEBUG = {% if 'debug' in request.GET %}true{% else %}false{% endif %}
+
+
+		window.checkInit = (id, tristate=true) ->
+			check = $("\##{id}")
+
+			check.prop('tristate', tristate)
+
+			check.click (e) ->
+				tristate = check.prop('tristate')
+				stateOld = check.data('state')
+				stateNew = switch stateOld
+					when null then true
+					when true then false
+					when false then (if tristate then null else true)
+					else throw 'invalid state'
+
+				check.data('state',stateNew)
+
+				if tristate then check.prop('indeterminate',not stateNew?)
+				check.prop('checked',stateNew)
+		window.checkSet = (id,value) ->
+			check = $("\##{id}")
+			check.data('state',value)
+
+			if value? then check.prop('checked',value)
+			if check.prop('tristate') then check.prop('indeterminate', not value?)
+		window.selectSet = (id,value) ->
+			select = $("\##{id}")
+			select.val(value)
+		window.getElementType = (id) ->
+			el = $("\##{id}")
+			type = el.prop('nodeName').toLowerCase()
+			switch type
+				when 'input'
+					el.attr('type')
+				else type
+		window.setElementToDefault = (id, value) ->
+			el = $("\##{id}")
+			el.change -> setPreset ''
+
+			switch getElementType(id)
+				when 'text'
+					el.val('')
+					el.prop 'placeholder', value
+				when 'select'
+					el.val(if Array.isArray(value) then '' else value)
+				when 'checkbox'
+					checkSet(id, if Array.isArray(value) then null else value )
+				else
+					alert id #throw 'unsupported element type'
+		window.setPreset = (preset=null) ->
+			select = $('#preset')
+
+			if preset?
+				selectSet('preset',preset)
+				if not preset.length then return
+			else
+				preset = select.val()
+
+			mrt.param.setBase(preset)
+			param = mrt.param.getBase()
+
+			for type,p of param
+				for key,val of p
+					id = "#{type}_#{key}"
+					setElementToDefault id, val
+
+		$(document).ready ->
+			#reload on window resize
+			$(window).resize (-> setTimeout(window.mrt.resize, 0))
+
+			#create the MRT object
+			window.mrt = new MRT
+			  debug: window.DEBUG
+			  csrf: '{{ csrf_token }}'
+
+			 #initialize the checkboxes
+			checkInit(id,init) for id,init of {
+				sequence_interleave_norotation: false
+				stimulus_match: true
+				stimulus_flip_x: true
+				stimulus_flip_y: true
+				stimulus_flip_z: true
+				stimulus_show_angle: false
+			}
+
+			#set the random seed when the textbox loses focus
+			$('#random_seed').prop 'placeholder', mrt.getSeed()
+			$('#random_seed').focusout => mrt.setSeed($('#random_seed').val())
+
+			#initialize the parameter preset
+			$('#preset').change -> setPreset()
+			setPreset('default')
+
+	</script>
+{% endblock script %}

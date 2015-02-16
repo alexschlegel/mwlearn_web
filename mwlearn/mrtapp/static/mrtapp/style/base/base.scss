@@ -1,0 +1,14 @@
+$orange: rgb(255,192,0);
+$rust: rgb(192,72,32);
+
+body {
+	//prevent scrollbars, right panel animation scrollbars
+	overflow: hidden;
+}
+
+a {
+	text-decoration: none;
+
+	color: $rust;
+}
+a:hover {color: $orange}

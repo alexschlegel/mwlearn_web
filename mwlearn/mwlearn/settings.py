@@ -53,6 +53,7 @@ INSTALLED_APPS = (
 	'compressor',
 #	'djangobower',
     'mwlearnapp',
+	'mrtapp',
 )
 
 MIDDLEWARE_CLASSES = (

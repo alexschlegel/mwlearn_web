@@ -1,0 +1,50 @@
+{% load static compress %}
+
+{# put non-outputting template tags here #}
+{% block tags %}{% endblock tags %}
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		{% block meta %}
+			<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		{% endblock meta %}
+
+		{% block favicon %}<link rel="shortcut icon" href="{% static "mrtapp/images/favicon.png" %}" />{% endblock favicon %}
+
+		{# set the title through the view's "title" attribute #}
+		<title>{% block title %}Mental Rotation Test{% if view.title %}: {{ view.title }}{% endif %}{% endblock title %}</title>
+
+		{% block all_style %}{% compress css %}
+
+			{% block framework_style %}
+				<link type="text/css" rel="stylesheet" href="{% static "mrtapp/external/pure/pure.css" %}" />
+			{% endblock framework_style %}
+
+			{# the base style sheet to define the page format #}
+			{% block base_style %}
+				<link type="text/x-scss" rel="stylesheet" href="{% static "mrtapp/style/base/base.scss" %}" />
+			{% endblock base_style %}
+
+			{% block style %}{% endblock style %}
+
+		{% endcompress css %}{% endblock all_style %}
+	</head>
+
+<body {% block body_attr %}{% endblock body_attr %}>
+    {% block body %}
+
+    {% endblock body %}
+
+	{% block all_script %}
+		{% compress js %}
+			<script type="text/javascript" src="{% static "mrtapp/external/jquery/jquery.js" %}"></script>
+
+			{# additional js: this is generally what subtemplates should use #}
+			{% block script %}{% endblock script %}
+		{% endcompress js %}
+	{% endblock all_script %}
+</body>
+
+</html>
