@@ -23,11 +23,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="mrt.html" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="mrt.html" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/templates/mrtapp/mrt.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-14.958333" vertical-offset="346" max-vertical-offset="4470">
-              <caret line="47" column="52" selection-start-line="47" selection-start-column="52" selection-end-line="47" selection-end-column="52" />
+            <state vertical-scroll-proportion="0.33212996" vertical-offset="746" max-vertical-offset="4470">
+              <caret line="62" column="55" selection-start-line="62" selection-start-column="55" selection-end-line="62" selection-end-column="55" />
               <folding />
             </state>
           </provider>
@@ -53,11 +53,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="mrt.coffee" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="mrt.coffee" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/mrtapp/static/mrtapp/script/mrt.coffee">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.6366782" vertical-offset="47152" max-vertical-offset="48165">
-              <caret line="3168" column="25" selection-start-line="3168" selection-start-column="25" selection-end-line="3168" selection-end-column="25" />
+            <state vertical-scroll-proportion="0.0" vertical-offset="32718" max-vertical-offset="48165">
+              <caret line="2194" column="30" selection-start-line="2194" selection-start-column="27" selection-end-line="2194" selection-end-column="30" />
               <folding />
             </state>
           </provider>
@@ -152,8 +152,8 @@
         <option value="$PROJECT_DIR$/mwlearn/urls.py" />
         <option value="$PROJECT_DIR$/mrtapp/urls.py" />
         <option value="$PROJECT_DIR$/mrtapp/static/mrtapp/style/experiment.scss" />
-        <option value="$PROJECT_DIR$/templates/mrtapp/mrt.html" />
         <option value="$PROJECT_DIR$/mrtapp/static/mrtapp/script/mrt.coffee" />
+        <option value="$PROJECT_DIR$/templates/mrtapp/mrt.html" />
       </list>
     </option>
   </component>
@@ -1044,18 +1044,18 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/templates/mrtapp/mrt.html">
+    <entry file="file://$PROJECT_DIR$/mrtapp/static/mrtapp/script/mrt.coffee">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-14.958333" vertical-offset="346" max-vertical-offset="4470">
-          <caret line="47" column="52" selection-start-line="47" selection-start-column="52" selection-end-line="47" selection-end-column="52" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="32718" max-vertical-offset="48165">
+          <caret line="2194" column="30" selection-start-line="2194" selection-start-column="27" selection-end-line="2194" selection-end-column="30" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/mrtapp/static/mrtapp/script/mrt.coffee">
+    <entry file="file://$PROJECT_DIR$/templates/mrtapp/mrt.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.6366782" vertical-offset="47152" max-vertical-offset="48165">
-          <caret line="3168" column="25" selection-start-line="3168" selection-start-column="25" selection-end-line="3168" selection-end-column="25" />
+        <state vertical-scroll-proportion="0.33212996" vertical-offset="746" max-vertical-offset="4470">
+          <caret line="62" column="55" selection-start-line="62" selection-start-column="55" selection-end-line="62" selection-end-column="55" />
           <folding />
         </state>
       </provider>

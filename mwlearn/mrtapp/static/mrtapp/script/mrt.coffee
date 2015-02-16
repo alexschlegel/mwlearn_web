@@ -2703,7 +2703,7 @@ window.MRT = class MRT
         param.trial = @root.param.fill param.trial, 'trial', false
         param.stimulus = @getSequence(@current_trial)
         @doTrial param,
-          callback: (shw) => setTimeout @run, param.trial.isi
+          callback: (shw) => setTimeout @run, param.trial.iti
 
         @current_trial++
 
@@ -3013,7 +3013,7 @@ window.MRT = class MRT
         trial: {
           duration: 6000
           target_delay: 1000
-          isi: 6000
+          iti: 6000
         }
         stimulus: {
           match: [false, true]
@@ -3034,7 +3034,7 @@ window.MRT = class MRT
 
       @_presets.interleave_norotation = copy @_presets.default, true
       @_presets.interleave_norotation.sequence.interleave_norotation = true
-      @_presets.interleave_norotation.trial.isi = 0 #***
+      @_presets.interleave_norotation.trial.iti = 0
       @_presets.interleave_norotation.stimulus.rotate_angle = @_presets.default.stimulus.rotate_angle[1..]
 
       @setBase 'default'
@@ -3107,7 +3107,7 @@ window.MRT = class MRT
       param = {
         duration: @parseParamInt($('#trial_duration').val())
         target_delay: @parseParamInt($('#trial_target_delay').val())
-        isi: @parseParamInt($('#trial_isi').val())
+        iti: @parseParamInt($('#trial_iti').val())
       }
 
       if fill then @root.param.fill(param,'trial',show) else param
@@ -3165,7 +3165,7 @@ window.MRT = class MRT
         param = @getParam(false,false)
         @root.session.setSequence(param)
         trial = @root.param.fill param.trial, 'trial', false
-        tTotal = @root.session.getSequence().length*(trial.duration+trial.isi) - trial.isi
+        tTotal = @root.session.getSequence().length*(trial.duration+trial.iti) - trial.iti
         @clear 'sequence'
         @set 'exp_duration', "#{tTotal/(1000*60)} min."
 
