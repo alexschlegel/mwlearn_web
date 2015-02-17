@@ -2685,9 +2685,6 @@ window.MRT = class MRT
       @setSequence param
       @_base_param = param ? @root.param.getBase()
 
-      #get the total experiment time
-      @root.dbg.showSequenceInfo()
-
       if @setSubject()
         @instructSession {
           sequence_post: (shw) =>
