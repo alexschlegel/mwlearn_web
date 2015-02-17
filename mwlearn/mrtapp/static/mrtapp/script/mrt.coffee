@@ -2650,6 +2650,7 @@ window.MRT = class MRT
     _result_idx: 0
 
     _sequence: null
+    _trials_per_block: 0
 
     _base_param: null
 
@@ -2685,6 +2686,8 @@ window.MRT = class MRT
       @setSequence param
       @_base_param = param ? @root.param.getBase()
 
+      if param.sequence.design=='block' then @root.dbg.step 'block'
+
       if @setSubject()
         @instructSession {
           sequence_post: (shw) =>
@@ -2695,15 +2698,15 @@ window.MRT = class MRT
         @root.dbg.clear()
 
     step: ->
-        @root.dbg.set 'trial', @current_trial+1
+      @root.dbg.step 'trial'
 
-        param = copy @_base_param
-        param.trial = @root.param.fill param.trial, 'trial', false
-        param.stimulus = @getSequence(@current_trial)
-        @doTrial param,
-          callback: (shw) => setTimeout @run, param.sequence.iti
+      param = copy @_base_param
+      param = @root.param.fill param, null, false
+      param.stimulus = @getSequence(@current_trial)
+      @doTrial param,
+        callback: (shw) => setTimeout @run, @getITI(param)
 
-        @current_trial++
+      @current_trial++
 
     finish: -> @root.show.Instructions 'Finished!'
 
@@ -2721,6 +2724,17 @@ window.MRT = class MRT
         true
       else
         false
+
+    getITI: (param) ->
+      switch param.sequence.design
+        when 'event' then param.sequence.iti
+        when 'block'
+          if @current_trial % @_trials_per_block == 0
+            @root.dbg.step 'block'
+            param.sequence.ibi
+          else
+            param.sequence.iti
+        else throw 'invalid design'
 
     _generate_match_object: (param, match=null) ->
       if not match? then match = {}
@@ -2797,6 +2811,9 @@ window.MRT = class MRT
           seq.push seq_rotate[idx]
           seq.push seq_norotate[idx]
         seq.pop()
+
+      #get the number of trials per block
+      @_trials_per_block = seq.length
 
       seq
 
