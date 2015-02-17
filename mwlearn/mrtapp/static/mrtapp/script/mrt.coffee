@@ -2685,8 +2685,8 @@ window.MRT = class MRT
     start: (param=null) ->
       @setSequence param
       @_base_param = param ? @root.param.getBase()
-
-      if param.sequence.design=='block' then @root.dbg.step 'block'
+      
+      if @_base_param.sequence.design=='block' then @root.dbg.step 'block'
 
       if @setSubject()
         @instructSession {

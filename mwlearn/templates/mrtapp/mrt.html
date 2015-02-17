@@ -309,25 +309,26 @@
 			  debug: window.DEBUG
 			  csrf: '{{ csrf_token }}'
 
-			 #initialize the checkboxes
-			checkInit(id,init) for id,init of {
-				sequence_interleave_norotation: false
-				stimulus_match: true
-				stimulus_flip_x: true
-				stimulus_flip_y: true
-				stimulus_flip_z: true
-				stimulus_show_angle: false
-			}
+			if window.DEBUG
+				#initialize the checkboxes
+				checkInit(id,init) for id,init of {
+					sequence_interleave_norotation: false
+					stimulus_match: true
+					stimulus_flip_x: true
+					stimulus_flip_y: true
+					stimulus_flip_z: true
+					stimulus_show_angle: false
+				}
 
-			#set the random seed when the textbox loses focus
-			$('#random_seed').prop 'placeholder', mrt.getSeed()
-			$('#random_seed').focusout => mrt.setSeed($('#random_seed').val())
+				#set the random seed when the textbox loses focus
+				$('#random_seed').prop 'placeholder', mrt.getSeed()
+				$('#random_seed').focusout => mrt.setSeed($('#random_seed').val())
 
-			#initialize the parameter preset
-			$('#preset').change => setPreset()
-			setPreset('default')
+				#initialize the parameter preset
+				$('#preset').change => setPreset()
+				setPreset('default')
 
-			#set the function to show/hide elements based on the design
-			$('#sequence_design').change -> setDesignElements()
+				#set the function to show/hide elements based on the design
+				$('#sequence_design').change -> setDesignElements()
 	</script>
 {% endblock script %}
