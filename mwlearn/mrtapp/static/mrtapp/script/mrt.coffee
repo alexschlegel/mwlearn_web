@@ -183,6 +183,8 @@ window.MRT = class MRT
   constructor: (options={}) ->
     @debug = options.debug ? false
 
+    @dbg = @Debugger()
+
     defaults = {
       seed: @_seed_default
       container: 'experiment'
@@ -225,7 +227,6 @@ window.MRT = class MRT
     @data = @Data()
     @session = @Session()
     @param = @Param()
-    @dbg = @Debugger()
 
     if options.loadimages
       images = options.images
@@ -2685,7 +2686,7 @@ window.MRT = class MRT
       @_base_param = param ? @root.param.getBase()
 
       #get the total experiment time
-      @root.dbg.showDuration()
+      @root.dbg.showSequenceInfo()
 
       if @setSubject()
         @instructSession {
@@ -2703,7 +2704,7 @@ window.MRT = class MRT
         param.trial = @root.param.fill param.trial, 'trial', false
         param.stimulus = @getSequence(@current_trial)
         @doTrial param,
-          callback: (shw) => setTimeout @run, param.trial.iti
+          callback: (shw) => setTimeout @run, param.sequence.iti
 
         @current_trial++
 
@@ -2724,6 +2725,112 @@ window.MRT = class MRT
       else
         false
 
+    _generate_match_object: (param, match=null) ->
+      if not match? then match = {}
+
+      match.new = not match.idx?
+
+      if match.new
+        match.idx = 0
+
+        match.match = if @root.param.isEmpty(param.stimulus.match)
+          [t, f] = dec2frac(param.sequence.match_ratio)
+          (true for [1..t]).concat (false for [1..f])
+        else
+          forceArray(param.stimulus.match)
+
+        randomize match.match
+
+      match
+
+    _generate_sequence_event: (param, match=null, match_norotate=null) ->
+      param = copy param, true
+
+      #get the possible rotation directions and angles
+      rotate_dir = forceArray(@root.param.fillBase(param.stimulus.rotate_dir,'stimulus','rotate_dir'))
+      rotate_angle = forceArray(@root.param.fillBase(param.stimulus.rotate_angle,'stimulus','rotate_angle'))
+
+      #get an array of match values that matches the specified ratio
+      match = @_generate_match_object param, match
+      match_norotate = @_generate_match_object param, match_norotate
+
+      #choose the stimulus parameters for each trial
+      seq = []
+      for dir in rotate_dir
+        for angle in rotate_angle
+          if match.new then match.idx = 0
+          for [1..param.sequence.trials_per_condition]
+            param.stimulus.rotate_dir = dir
+            param.stimulus.rotate_angle = angle
+            param.stimulus.match = match.match[match.idx]
+
+            stim = @root.param.fill(param.stimulus,'stimulus',false)
+            seq.push stim
+
+            match.idx = (match.idx+1) % match.match.length
+
+      #randomize the trials
+      randomize seq
+
+      #interleave no rotation trials
+      if param.sequence.interleave_norotation
+        param.stimulus.rotate_angle = 0
+
+        #generate the same trials as above, but with no rotation
+        seq_norotate = []
+        for dir in rotate_dir
+          for angle in rotate_angle
+            if match_norotate.new then match_norotate.idx = 0
+            for [1..param.sequence.trials_per_condition]
+              param.stimulus.rotate_dir = dir
+              param.stimulus.match = match_norotate.match[match_norotate.idx]
+
+              stim = @root.param.fill(param.stimulus,'stimulus',false)
+              seq_norotate.push stim
+
+              match_norotate.idx = (match_norotate.idx+1) % match_norotate.match.length
+
+        #randomize the order of the norotate trials
+        randomize seq_norotate
+
+        #interleave all but the last norotate trial
+        seq_rotate = seq
+        seq = []
+        for idx in [0..seq_rotate.length-1]
+          seq.push seq_rotate[idx]
+          seq.push seq_norotate[idx]
+        seq.pop()
+
+      seq
+
+    _generate_sequence_block: (param) ->
+      param = copy param, true
+
+      #get the possible rotation angles
+      rotate_angle = forceArray(@root.param.fillBase(param.stimulus.rotate_angle,'stimulus','rotate_angle'))
+
+      #generate each block
+      seq_block = []
+      for angle in rotate_angle
+        match = @_generate_match_object(param)
+        match_norotate = @_generate_match_object(param)
+
+        param.stimulus.rotate_angle = angle
+        param.sequence.trials_per_condition = param.sequence.dir_reps_per_block
+
+        #add all the blocks for this angle
+        for [1..param.sequence.blocks_per_angle]
+          seq_block.push @_generate_sequence_event param, match, match_norotate
+
+      #randomize the block order
+      randomize seq_block
+
+      #concatenate the trials
+      seq = []
+      (seq = seq.concat block) for block in seq_block
+
+      seq
+
 
     setSequence: (param=null) ->
       param = if param? then copy(param,true) else {}
@@ -2735,66 +2842,11 @@ window.MRT = class MRT
       #fill the sequence parameters
       param.sequence = @root.param.fill param.sequence, 'sequence', false
 
-      #get the possible rotation directions and angles
-      rotate_dir = forceArray(@root.param.fillBase(param.stimulus.rotate_dir,'stimulus','rotate_dir'))
-      rotate_angle = forceArray(@root.param.fillBase(param.stimulus.rotate_angle,'stimulus','rotate_angle'))
-
-      #get an array of match values that matches the specified ratio
-      match = if @root.param.isEmpty(param.stimulus.match)
-        [t, f] = dec2frac(param.sequence.match_ratio)
-        (true for [1..t]).concat (false for [1..f])
-      else
-        forceArray(param.stimulus.match)
-      num_match = match.length
-
-      #choose the stimulus parameters for each trial
-      @_sequence = []
-      for dir in rotate_dir
-        for angle in rotate_angle
-          idx_match = 0
-          for [1..param.sequence.trials_per_condition]
-            param.stimulus.rotate_dir = dir
-            param.stimulus.rotate_angle = angle
-            param.stimulus.match = match[idx_match]
-
-            stim = @root.param.fill(param.stimulus,'stimulus',false)
-            @_sequence.push stim
-
-            idx_match = (idx_match+1) % num_match
-
-      #randomize the trials
-      randomize @_sequence
-
-      #interleave no rotation trials
-      if param.sequence.interleave_norotation
-        param.stimulus.rotate_angle = 0
-
-        #generate the same trials as above, but with no rotation
-        seq_norotate = []
-        for dir in rotate_dir
-          for angle in rotate_angle
-            idx_match = 0
-            for [1..param.sequence.trials_per_condition]
-              param.stimulus.rotate_dir = dir
-              param.stimulus.match = match[idx_match]
-
-              stim = @root.param.fill(param.stimulus,'stimulus',false)
-              seq_norotate.push stim
-
-              idx_match = (idx_match+1) % num_match
-
-        #randomize the order of the norotate trials
-        randomize seq_norotate
-
-        #interleave all but the last norotate trial
-        seq_rotate = @_sequence
-        @_sequence = []
-        for idx in [0..seq_rotate.length-1]
-          @_sequence.push seq_rotate[idx]
-          @_sequence.push seq_norotate[idx]
-        @_sequence.pop()
-
-      @root.dbg.set 'num_trials', @_sequence.length
+      #generate the sequence depending on the design
+      @_sequence = switch param.sequence.design
+        when 'block' then @_generate_sequence_block(param)
+        when 'event' then @_generate_sequence_event(param)
+        else throw 'invalid sequence design'
 
     getSequence: (idx_trial=null) ->
       if not @_sequence? then @setSequence()
@@ -3006,14 +3058,18 @@ window.MRT = class MRT
 
       @_presets.default = {
         sequence: {
+          design: 'block'
+          blocks_per_angle: 6
+          dir_reps_per_block: 1
+          ibi: 10000
           trials_per_condition: 9 #"condition" == angle + direction
           match_ratio: 2 #matches per non-match
+          iti: 6000
           interleave_norotation: false
         }
         trial: {
           duration: 6000
           target_delay: 1000
-          iti: 6000
         }
         stimulus: {
           match: [false, true]
@@ -3033,13 +3089,16 @@ window.MRT = class MRT
       }
 
       @_presets.interleave_norotation = copy @_presets.default, true
+      @_presets.interleave_norotation.sequence.design = 'event'
       @_presets.interleave_norotation.sequence.interleave_norotation = true
-      @_presets.interleave_norotation.trial.iti = 0
+      @_presets.interleave_norotation.sequence.iti = 0
       @_presets.interleave_norotation.stimulus.rotate_angle = @_presets.default.stimulus.rotate_angle[1..]
 
       @setBase 'default'
 
     setBase: (x) ->
+      @root.dbg.clear()
+
       switch getClass(x)
         when 'String' then @_base = @_presets[x]
         when 'Object' then x
@@ -3072,7 +3131,7 @@ window.MRT = class MRT
         if dbg then @root.dbg.set type, param
       else
         for type of @_base
-          param[type] = @fill(param[type],type)
+          param[type] = @fill(param[type],type,dbg)
 
       param
 
@@ -3096,8 +3155,13 @@ window.MRT = class MRT
 
     getSequenceParam: (fill=true, show=true) ->
       param = {
+        design: $('#sequence_design').val()
+        blocks_per_angle: @parseParamInt($('#sequence_blocks_per_angle').val())
+        dir_reps_per_block: @parseParamInt($('#sequence_dir_reps_per_block').val())
+        ibi: @parseParamInt($('#sequence_ibi').val())
         trials_per_condition: @parseParamInt($('#sequence_trials_per_condition').val())
         match_ratio: @parseParamDec($('#sequence_match_ratio').val())
+        iti: @parseParamInt($('#sequence_iti').val())
         interleave_norotation: $('#sequence_interleave_norotation').data('state')
       }
 
@@ -3107,7 +3171,6 @@ window.MRT = class MRT
       param = {
         duration: @parseParamInt($('#trial_duration').val())
         target_delay: @parseParamInt($('#trial_target_delay').val())
-        iti: @parseParamInt($('#trial_iti').val())
       }
 
       if fill then @root.param.fill(param,'trial',show) else param
@@ -3160,14 +3223,81 @@ window.MRT = class MRT
       seq = @root.session.getSequence()
       @set {sequence:seq}, null, true
 
-    showDuration: ->
+    showSequenceInfo: ->
       if @root.debug
+        @clear 'sequence'
+
+        #set the sequence
         param = @getParam(false,false)
         @root.session.setSequence(param)
-        trial = @root.param.fill param.trial, 'trial', false
-        tTotal = @root.session.getSequence().length*(trial.duration+trial.iti) - trial.iti
-        @clear 'sequence'
-        @set 'exp_duration', "#{tTotal/(1000*60)} min."
+        seq = @root.session.getSequence()
+
+        #fill in parameters
+        rotate_angle = forceArray(@root.param.fillBase(param.stimulus.rotate_angle,'stimulus','rotate_angle'))
+        rotate_dir = forceArray(@root.param.fillBase(param.stimulus.rotate_dir,'stimulus','rotate_angle'))
+        param = @root.param.fill param, null, false
+
+        #some times
+        tTrial = param.trial.duration
+        tITI = param.sequence.iti
+
+        #number of trials
+        num_trials = seq.length
+        @set 'trials', num_trials
+
+        #trials per condition
+        trials_per_condition = {}
+        for s in seq
+          angle = s.rotate_angle
+          dir = s.rotate_dir
+
+          #total per condition
+          if not trials_per_condition[angle]?
+            trials_per_condition[angle] = {
+              total: 1
+              match: 0
+            }
+          else
+            trials_per_condition[angle].total++
+
+          #match trials
+          if s.match then trials_per_condition[angle].match++
+
+          #per subcondition
+          if not trials_per_condition[angle][dir]?
+            trials_per_condition[angle][dir] = 1
+          else
+            trials_per_condition[angle][dir]++
+
+        @set 'trials_per_condition', trials_per_condition
+
+        #design-specific info
+        switch param.sequence.design
+          when 'block'
+            num_blocks = param.sequence.blocks_per_angle*rotate_angle.length
+            num_trials_per_block = param.sequence.dir_reps_per_block*rotate_dir.length
+
+            @set 'blocks', num_blocks
+            @set 'trials_per_block', num_trials_per_block
+          when 'event'
+            null
+          else throw 'invalid design'
+
+        #experiment duration
+        switch param.sequence.design
+          when 'block'
+            tIBI = param.sequence.ibi
+            tBlock = num_trials_per_block*(tTrial+tITI) - tITI
+            tTotal = num_blocks*tBlock + tIBI*(num_blocks-1)
+
+            tBlock = tBlock/1000
+            @set 'block_duration', "#{tBlock} sec."
+          when 'event'
+            tTotal = num_trials*(tTrial+tITI) - tITI
+          else throw 'invalid design'
+
+        tTotal = Math.round(tTotal*100/(1000*60))/100
+        @set 'exp_duration', "#{tTotal} min."
 
     get: (key=null) -> if key? then @debug_values[key] else @debug_values
 
