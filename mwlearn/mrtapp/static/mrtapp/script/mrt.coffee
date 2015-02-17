@@ -2685,7 +2685,7 @@ window.MRT = class MRT
     start: (param=null) ->
       @setSequence param
       @_base_param = param ? @root.param.getBase()
-      
+
       if @_base_param.sequence.design=='block' then @root.dbg.step 'block'
 
       if @setSubject()
@@ -3278,10 +3278,11 @@ window.MRT = class MRT
           if s.match then trials_per_condition[angle].match++
 
           #per subcondition
-          if not trials_per_condition[angle][dir]?
-            trials_per_condition[angle][dir] = 1
-          else
-            trials_per_condition[angle][dir]++
+          if angle != 0
+            if not trials_per_condition[angle][dir]?
+              trials_per_condition[angle][dir] = 1
+            else
+              trials_per_condition[angle][dir]++
 
         @set 'trials_per_condition', trials_per_condition
 
