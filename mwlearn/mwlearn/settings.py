@@ -22,8 +22,12 @@ ME = platform.node()
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 
+SECURE_DIR = '/var/www/mwlearn/secure/'
+
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '*$v$xq7d)e!-&2589*f4y!^t!&ep$#-te+ans7h2n27yivp9(m'
+SECRET_KEY_LOCATION = os.path.join(SECURE_DIR,'secret_key')
+with open(SECRET_KEY_LOCATION) as file:
+	SECRET_KEY = file.read()
 
 # SECURITY WARNING: don't run with debug turned on in production!
 if ME == ME_DEV:
@@ -85,12 +89,16 @@ elif ME == ME_TEST:
 else:
 	raise Exception("Where am I ? ({0})".format(ME))
 
+DATABASE_PW_LOCATION = os.path.join(SECURE_DIR,'database_pw')
+with open(DATABASE_PW_LOCATION) as file:
+	DATABASE_PW = file.read()
+
 DATABASES = {
     'default': {
 		'ENGINE': 'django.db.backends.postgresql_psycopg2',
 		'NAME': 'mwlearn',
 		'USER': DB_USER,
-		'PASSWORD': '0ecky68ecky5',
+		'PASSWORD': DATABASE_PW,
 		'HOST': '127.0.0.1',
 		'PORT': '5432'
 	}
@@ -128,6 +136,19 @@ COMPRESS_CSS_FILTERS = (
 
 COMPRESS_JS_FILTERS = (
 	'compressor.filters.jsmin.JSMinFilter',
+)
+
+# Email
+EMAIL_PW_LOCATION = os.path.join(SECURE_DIR,'email_pw')
+with open(EMAIL_PW_LOCATION) as file:
+	EMAIL_HOST_PASSWORD = file.read()
+EMAIL_USE_TLS = True
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'schlegelindustries@gmail.com'
+SERVER_EMAIL = EMAIL_HOST_USER
+EMAIL_PORT = 587
+ADMINS = (
+	('Alex', 'schlegel@gmail.com'),
 )
 
 # Internationalization

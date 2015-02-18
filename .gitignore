@@ -1,3 +1,5 @@
+secure/
 __pycache__/
 *.py[cod]
 .sass-cache/
+mwlearn/static/CACHE/
