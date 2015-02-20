@@ -97,16 +97,6 @@
 						<label for="stimulus_idx">index:</label>
 						<select id="stimulus_idx">
 							<option value=""></option>
-							<option value="0">0</option>
-							<option value="1">1</option>
-							<option value="2">2</option>
-							<option value="3">3</option>
-							<option value="4">4</option>
-							<option value="5">5</option>
-							<option value="6">6</option>
-							<option value="7">7</option>
-							{% comment %}<option value="8">8</option>
-							<option value="9">9</option>{% endcomment %}
 						</select>
 					</div>
 
@@ -185,6 +175,7 @@
 					</div>
 
 					<input type="button" value="show" onclick="window.mrt.dbg.showStimulus()">
+					<input type="button" value="show figures" onclick="window.mrt.dbg.showFigures()">
 			</div>
 			<div class="pure-u-3-4" id="debug-experiment">
 				<div id="debug-info"></div>
@@ -310,6 +301,11 @@
 			  csrf: '{{ csrf_token }}'
 
 			if window.DEBUG
+				#populate the stimulus index select
+				stimulus_idx = $('#stimulus_idx')
+				for idx in [0..mrt.param.sm_figure.length-1]
+					stimulus_idx.append($('<option />').val(idx).text(idx))
+
 				#initialize the checkboxes
 				checkInit(id,init) for id,init of {
 					sequence_interleave_norotation: false

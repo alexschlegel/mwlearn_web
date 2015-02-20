@@ -672,11 +672,14 @@ window.MRT = class MRT
       padding: null
 
       _attr: null
+      _resize: false
 
       constructor: (root, elements, options) ->
         options.width = options.width ? root.width()
         options.height = options.height ? root.height()
         @padding = options.padding ? 8
+
+        @_resize = options.resize ? true
 
         @_attr = {
           width: options.width
@@ -727,7 +730,7 @@ window.MRT = class MRT
               x = -(wFinal-wPer)/2 + c*(wPer+@padding)
               y = -(hFinal-hPer)/2 + r*(hPer+@padding)
 
-              @element[idx].attr 'box', [wPer, hPer]
+              if @_resize then @element[idx].attr 'box', [wPer, hPer]
               @element[idx].attr 'x', x
               @element[idx].attr 'y', y
 
@@ -2896,6 +2899,8 @@ window.MRT = class MRT
     showPrompt: (param, options=null) ->
       options = options ? {}
 
+      options.show_text = options.show_text ? true
+
       flip = [param.flip_x, param.flip_y, param.flip_z]
 
       a = param.position*Math.PI/4 + Math.PI
@@ -2910,15 +2915,18 @@ window.MRT = class MRT
         flip: flip
         show: options.show
 
-      strPrompt = @getPromptText param
-      yPrompt = @stim_figure_prompt.attr('y') - @stim_figure_prompt.attr('height')/2 - param.font_size/2
-      @stim_prompt = @root.show.Text strPrompt,
-        x: @stim_figure_prompt.attr 'x'
-        y: yPrompt
-        'font-size': param.font_size
-        show: options.show
+      if options.show_text
+        strPrompt = @getPromptText param
+        yPrompt = @stim_figure_prompt.attr('y') - @stim_figure_prompt.attr('height')/2 - param.font_size/2
+        @stim_prompt = @root.show.Text strPrompt,
+          x: @stim_figure_prompt.attr 'x'
+          y: yPrompt
+          'font-size': param.font_size
+          show: options.show
 
-      [@stim_figure_prompt, @stim_prompt]
+        [@stim_figure_prompt, @stim_prompt]
+      else
+        [@stim_figure_prompt]
 
     showTarget: (param, options=null) ->
       options = options ? {}
@@ -3054,16 +3062,39 @@ window.MRT = class MRT
     _default_edge: => Math.max(1,Math.round(@_min_window_dim()/200))
     _default_font_size: => Math.round(@_min_window_dim()/20)
 
+    #new figures
     sm_figure: [
-      [[0,0,0],[0,1,0],[0,2,0],[0,3,0],[0,3,1],[0,0,1],[0,0,2],[0,0,3],[1,0,3],[2,0,3]],
-      [[0,0,0],[0,1,0],[0,2,0],[0,3,0],[-1,3,0],[0,0,1],[0,0,2],[0,0,3],[1,0,3],[2,0,3]],
-      [[0,0,0],[0,1,0],[0,2,0],[0,3,0],[0,3,-1],[0,0,1],[0,0,2],[0,0,3],[-1,0,3],[-2,0,3]],
-      [[0,0,0],[0,1,0],[0,2,0],[0,3,0],[-1,3,0],[0,0,1],[0,0,2],[0,0,3],[0,-1,3],[0,-2,3]],
-      [[0,0,0],[0,1,0],[0,2,0],[0,3,0],[0,0,1],[0,0,2],[0,0,3],[-1,0,3],[-2,0,3],[-2,-1,3]],
-      [[0,0,0],[0,1,0],[0,2,0],[1,2,0],[2,2,0],[3,2,0],[0,0,1],[0,0,2],[0,0,3],[-1,0,3]],
-      [[0,0,0],[0,1,0],[0,2,0],[0,3,0],[1,3,0],[2,3,0],[0,0,1],[0,0,2],[0,0,3],[-1,0,3],[-2,0,3]],
-      [[0,0,0],[0,1,0],[0,2,0],[1,2,0],[2,2,0],[0,0,1],[0,0,2],[0,0,3],[-1,0,3],[-2,0,3]],
+      [[0,0,0],[0,1,0],[0,2,0],[0,3,0],[-1,3,0],[0,0,1],[0,0,2],[0,0,3],[1,0,3],[2,0,3]], #1
+      [[0,0,0],[0,1,0],[0,2,0],[0,3,0],[0,3,1],[0,0,1],[0,0,2],[0,0,3],[1,0,3],[2,0,3]], #our 1
+      [[0,0,0],[0,1,0],[0,2,0],[0,3,0],[0,3,-1],[0,0,1],[0,0,2],[0,0,3],[1,0,3],[2,0,3]], #3
+      [[0,0,0],[0,1,0],[0,2,0],[0,3,0],[0,3,-1],[0,3,-2],[0,0,1],[0,0,2],[0,0,3],[1,0,3]], #4
+      [[0,0,0],[0,1,0],[0,2,0],[1,2,0],[0,0,1],[0,0,2],[0,0,3],[-1,0,3],[-2,0,3]], #5
+      [[0,0,0],[0,1,0],[0,2,0],[1,2,0],[0,0,1],[0,0,2],[0,0,3],[-1,0,3],[-2,0,3],[-3,0,3]], #6
+      [[0,0,0],[0,1,0],[0,2,0],[1,2,0],[2,2,0],[3,2,0],[0,0,1],[0,0,2],[0,0,3],[-1,0,3]], #7
+      #[[0,0,0],[0,1,0],[0,2,0],[-1,2,0],[-2,2,0],[0,0,1],[0,0,2],[0,0,3],[1,0,3],[2,0,3]], #8 (bad)
+      [[0,0,0],[0,1,0],[0,2,0],[0,2,-1],[0,2,-2],[0,0,1],[0,0,2],[0,0,3],[1,0,3],[2,0,3]], #8 modified
+      [[0,0,0],[0,1,0],[0,2,0],[1,2,0],[2,2,0],[0,0,1],[0,0,2],[0,0,3],[-1,0,3],[-2,0,3]], #9
+      #[[0,0,0],[0,1,0],[0,2,0],[0,3,0],[1,3,0],[2,3,0],[0,0,1],[0,0,2],[-1,0,2],[-2,0,2]], #10 same as 9
+      #[[0,0,0],[0,1,0],[0,2,0],[-1,2,0],[-2,2,0],[0,0,1],[0,0,2],[0,0,3],[1,0,3],[2,0,3]], #11 same as 8
+      #[[0,0,0],[0,1,0],[0,2,0],[-1,2,0],[-2,2,0],[0,0,1],[0,0,2],[0,0,2],[1,0,2],[2,0,2],[3,0,2]], #12 (bad)
+      [[0,0,0],[0,1,0],[0,2,0],[1,2,0],[2,2,0],[0,0,1],[0,0,2],[0,0,2],[-1,0,2],[-2,0,2],[-3,0,2]], #12 modified
+      [[0,0,0],[0,1,0],[0,2,0],[0,3,0],[0,3,-1],[0,0,1],[0,0,2],[0,0,3],[0,0,4],[1,0,4]], #13
+      [[0,0,0],[0,1,0],[0,2,0],[0,3,0],[0,4,0],[0,4,-1],[0,0,1],[0,0,2],[0,0,3],[1,0,3]], #14
+      [[0,0,0],[0,1,0],[0,2,0],[0,3,0],[1,3,0],[0,0,1],[0,0,2],[0,0,3],[0,0,4],[-1,0,4]], #15
+      [[0,0,0],[0,1,0],[0,2,0],[0,3,0],[0,4,0],[1,4,0],[0,0,1],[0,0,2],[0,0,3],[-1,0,3]], #15
     ]
+
+    #our figures
+#    sm_figure: [
+#      [[0,0,0],[0,1,0],[0,2,0],[0,3,0],[0,3,1],[0,0,1],[0,0,2],[0,0,3],[1,0,3],[2,0,3]],
+#      [[0,0,0],[0,1,0],[0,2,0],[0,3,0],[-1,3,0],[0,0,1],[0,0,2],[0,0,3],[1,0,3],[2,0,3]],
+#      [[0,0,0],[0,1,0],[0,2,0],[0,3,0],[0,3,-1],[0,0,1],[0,0,2],[0,0,3],[-1,0,3],[-2,0,3]],
+#      [[0,0,0],[0,1,0],[0,2,0],[0,3,0],[-1,3,0],[0,0,1],[0,0,2],[0,0,3],[0,-1,3],[0,-2,3]],
+#      [[0,0,0],[0,1,0],[0,2,0],[0,3,0],[0,0,1],[0,0,2],[0,0,3],[-1,0,3],[-2,0,3],[-2,-1,3]],
+#      [[0,0,0],[0,1,0],[0,2,0],[1,2,0],[2,2,0],[3,2,0],[0,0,1],[0,0,2],[0,0,3],[-1,0,3]],
+#      [[0,0,0],[0,1,0],[0,2,0],[0,3,0],[1,3,0],[2,3,0],[0,0,1],[0,0,2],[0,0,3],[-1,0,3],[-2,0,3]],
+#      [[0,0,0],[0,1,0],[0,2,0],[1,2,0],[2,2,0],[0,0,1],[0,0,2],[0,0,3],[-1,0,3],[-2,0,3]],
+#    ]
 
     constructor: (root) ->
       super root
@@ -3151,10 +3182,14 @@ window.MRT = class MRT
 
   Debugger: -> new MRTClassDebugger(@)
   MRTClassDebugger: class MRTClassDebugger extends MRTClass
+    _stimuli: null
+
     debug_values: null
 
     constructor: (root) ->
       super root
+
+      @_stimuli = []
 
       @clear()
 
@@ -3215,16 +3250,35 @@ window.MRT = class MRT
         stimulus: @getStimulusParam(fill,show)
       }
 
+    showFigures: ->
+      param = @getStimulusParam(true, false)
+
+      @root.session.clearStimulus()
+      stimuli = for idx in [0..@root.param.sm_figure.length-1]
+        param.idx = idx
+        @root.session.showPrompt(param,{show_text:false})[0]
+
+      @_stimuli = @_stimuli.concat stimuli
+      @_stimuli.push @root.show.StimulusGrid stimuli,
+        resize: false
+
+
+    clearStimulus: ->
+      if @_stimuli? then stim.remove() for stim in @_stimuli
+      @_stimuli = []
+
+      if @root.session? then @root.session.clearStimulus()
+
     showStimulus: ->
       param = @getStimulusParam()
 
-      @root.session.clearStimulus()
-      @root.session.showStimulus(param, true)
+      @clearStimulus()
+      @root.session.showStimulus param
 
     doTrial: ->
       param = @getParam()
 
-      @root.session.clearStimulus()
+      @clearStimulus()
       @root.session.doTrial(param)
 
     run: ->
@@ -3339,6 +3393,7 @@ window.MRT = class MRT
         if getClass(key)=='String'
           delete @debug_values[key]
       else
+        @clearStimulus()
         @debug_values = {}
 
       @disp()
